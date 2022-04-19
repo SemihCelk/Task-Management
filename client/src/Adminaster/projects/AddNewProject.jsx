@@ -4,6 +4,7 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
   const [projectid, setProjectid] = useState();
   const [projectName, setProjectname] = useState();
   const [userid, setUserid] = useState();
+  const [hata,setHata]=useState()
   const onSubmit = (e) => {
     e.preventDefault();
     console.log(userid, projectid, projectName);
@@ -18,13 +19,10 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
       .then((res) => res.json())
       .then(() => {
         projectData();
-        console.log(test);
       })
       .finally(setshowproject(false))
-      .finally()
-      .catch((err) => console.log(err.data));
+      .catch((err) => setHata("proje eklenemedi"));
   };
-  console.log(userlist)
   return (
     <div className="addprojectbehind">
       <div className="container addproject">

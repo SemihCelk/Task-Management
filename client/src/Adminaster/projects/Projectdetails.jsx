@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./projectdetails.css";
 import SummaryAdd from "./SummaryAdd";
+import Projectuseradd from "./Projectuseradd";
 function Projectdetails({
   projectname,
   setFolder,
@@ -12,6 +13,33 @@ function Projectdetails({
   const [showsummaryadd, setShowsummaryadd] = useState(false);
   const [del, setDel] = useState(false);
   const [idHold, setIdhold] = useState();
+  const [userAdd, setUseradd] = useState(false);
+  const [userlist, setUserlist] = useState([]);
+  const [summaryUserfilter, setUserfilter] = useState([]);
+  // console.log(summaryUserfilter)
+  const loadData = () => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+    fetch("http://localhost:5000/api/user", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setUserlist(result))
+      .catch((error) => console.log("error", error));
+  };
+
+  const userfilter = () => {
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/project/user", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setUserfilter(result))
+      .catch((error) => console.log("error", error));
+  };
+
   const singleDelete = () => {
     const requestOptions = {
       method: "DELETE",
@@ -71,6 +99,17 @@ function Projectdetails({
       <button
         className="delBTN details-right-btn"
         onClick={() => {
+          loadData();
+          setUseradd(true);
+        }}
+      >
+        <span className="text">Add User</span>
+        <span className="icon">+</span>
+      </button>
+      <button
+        className="delBTN details-right-btn"
+        onClick={() => {
+          userfilter();
           setShowsummaryadd(true);
         }}
       >
@@ -84,7 +123,11 @@ function Projectdetails({
           setShowsummaryadd={setShowsummaryadd}
           summaryData={summary}
           idHold={idHold}
+          summaryUserfilter={summaryUserfilter}
         />
+      )}
+      {userAdd && (
+        <Projectuseradd setUseradd={setUseradd} userlist={userlist} id={id} />
       )}
       <br></br>
       <div className="details-table">

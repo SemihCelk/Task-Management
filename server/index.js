@@ -8,7 +8,7 @@ const client = new pg.Client({
     "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
 });
 client.connect();
-app.use(cors()); 
+app.use(cors());
 app.use(express.json());
 
 app.post("/login", (req, res) => {
@@ -113,7 +113,7 @@ app.post("/api/projects", async (req, res, next) => {
     res.json([created.rows]);
   } catch (error) {
     console.log("hata");
-    next(error); 
+    next(error);
   }
 }); //project summary list
 app.get("/api/project/summary/:id/", async (req, res, next) => {
@@ -126,22 +126,44 @@ app.get("/api/project/summary/:id/", async (req, res, next) => {
     next(error);
   }
 });
+//Project user add
+app.post("/api/projects/:id/", async (req, res, next) => {
+  try {
+    const userid = req.body.userid;
+    const projectid = req.body.id;
+    const projectuser =
+      "insert into projectuser(userid,projectid) values($1,$2) returning*;";
+    const userAdd = await client.query(projectuser, [userid, projectid]);
+    res.json(userAdd.rows); 
+  } catch (error) {
+    console.log("hata");
+    next(error);
+  } 
+}); 
+//project user filter
+app.get("/api/project/user",async(req,res,next)=>{
+  try {
+    const list = "SELECT * FROM public.projectuser ORDER BY id";
+    const getir = await client.query(list);
+    res.json(getir.rows);
+    console.log(getir.rows)
+  } catch (error) {
+    next(error);
+  }
+});
 //proje update
 app.put("/api/projects/:id/", async (req, res, next) => {
   try {
     const projectName = req.body.projectName;
     const project_user = req.body.userid;
-    console.log(projectName)
+    console.log(projectName);
     const update = `
       update project
       set	project_name=$1  
         WHERE id=$2
       RETURNING *
     `;
-    const response = await client.query(update, [
-      projectName,
-      req.params.id,
-    ]);
+    const response = await client.query(update, [projectName, req.params.id]);
     if (response.rows.length !== 1) {
       throw new Error("User not found");
     }
@@ -171,40 +193,48 @@ app.post("/api/user", async (req, res, next) => {
     const mail = req.body.mail;
     const isAdmin = req.body.isAdmin;
     console.log(name, surname, password, mail);
-    const sql = `INSERT INTO userslist(name,surname,password,mail,"isAdmin") VALUES ($1,$2,$3,$4,$5) RETURNING * ;`
+    const sql = `INSERT INTO userslist(name,surname,password,mail,"isAdmin") VALUES ($1,$2,$3,$4,$5) RETURNING * ;`;
     const response = await client.query(sql, [
       name,
       surname,
-      password, 
-      mail, 
+      password,
+      mail,
       isAdmin,
     ]);
-    res.json([response.rows]); 
+    res.json([response.rows]);
   } catch (error) {
     next(error);
   }
 });
 //summary ekleme
-app.post("/api/project/summary",async(req,res,next)=>{
-  try{
+app.post("/api/project/summary", async (req, res, next) => {
+  try {
     const projectid = req.body.id;
     const taskuser = req.body.data;
     const summary = req.body.summary;
-    const description = req.body.description; 
-    const start = req.body.start; 
+    const description = req.body.description;
+    const start = req.body.start;
     const finish = req.body.finish;
-    const sql = "insert into task(projectid,taskuser,summary,description,start,finish) values($1,$2,$3,$4,$5,$6) returning*;"
-    const response = await client.query(sql,[projectid,taskuser,summary,description,start,finish])
+    const sql =
+      "insert into task(projectid,taskuser,summary,description,start,finish) values($1,$2,$3,$4,$5,$6) returning*;";
+    const response = await client.query(sql, [
+      projectid,
+      taskuser,
+      summary,
+      description,
+      start,
+      finish,
+    ]);
     res.json([response.rows]);
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
-//summary silme 
-app.delete("/api/project/summary/:id/",async(req,res,next)=>{
+});
+//summary silme
+app.delete("/api/project/summary/:id/", async (req, res, next) => {
   try {
     const deletesummary = "delete from task where id=$1";
-    const singledeleter = await client.query(deletesummary, [req.params.id]);  
+    const singledeleter = await client.query(deletesummary, [req.params.id]);
     res.json([singledeleter]);
   } catch (error) {
     next(error);

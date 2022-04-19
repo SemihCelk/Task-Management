@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import "./addsummary.css"
-export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,idHold}) {
+import Projectuseradd from "./Projectuseradd";
+export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,idHold,summaryUserfilter}) {
   const [userid, setUserid] = useState();
   const [summary, setSummary] = useState();
   const [description, setDescription] = useState();
   const [start, setStart] = useState();
   const [finish, setFinish] = useState();
   const data = 27//silinecek
+ 
   const addTask = () => {
     console.log(id,summary,description,start,finish)
     const requestOptions = {
@@ -19,6 +21,8 @@ export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,idHold})
       .finally(summaryData(id))
       .catch((err) => console.log(err.data));
   };
+
+
   return (
     <div className="addprojectbehind">
       <div className="container addsummary">
@@ -56,13 +60,23 @@ export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,idHold})
             onChange={(e) => setFinish(e.target.value)}
             required
           ></input>
-          <select
-            className="select-add-summary"
+        <select
+            className="select"
             onChange={(e) => {
               setUserid(e.target.value);
             }}
           >
-            <option>Choose one</option>
+            {summaryUserfilter.map((item, i) => {
+              if(item.projectid===id){
+                if(item.userid===item.userid)
+                return (
+                  <option key={i}>
+                    {item.userid}
+                  </option>
+                );
+              }
+      
+            })}
           </select>
         </form>
         <button className="acceptbtn btn-add-summary" onClick={addTask}>

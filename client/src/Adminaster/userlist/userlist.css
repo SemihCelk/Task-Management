@@ -1,0 +1,135 @@
+.userlist-maindiv{
+    width: 100%;
+}
+h3{
+    padding: 2%;
+}
+.userlist-table-div {
+    width: auto;
+    margin-left: auto;
+    display: flex;
+    margin-top: 1%;
+}
+
+#userlist-table{
+    width: 100%;
+    margin-bottom: 10%;
+}
+table {
+    border-collapse: collapse;
+    text-align: center;
+
+  }
+  tr td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.501);
+    padding: 1%;
+
+  }
+  tr th{
+    padding: 1%;
+    background-color: rgb(40, 24, 54);
+  }
+.delBTN, .delBTN span {
+	transition: 200ms;
+}
+.delBTN {
+    position: relative;
+	width: 170px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    background: #a142b6;
+    float: right;
+    margin-right: 2.5%;
+    margin-bottom: 1%;
+}
+
+.delBTN .text {
+	transform: translateX(10px);
+	color: white;
+	font-weight: bold;
+}
+
+.delBTN .icon {
+	position: absolute;
+	border-left: 1px solid #d1d1d1;
+	transform: translateX(130px);
+	height: 40px;
+	width: 40px;
+	display: flex;
+	/* align-items: center; */
+	justify-content: center;
+    color: white;
+    font-size: 25px;
+    }
+
+
+.delBTN:hover {
+	background: #a142b6;
+}
+
+.delBTN:hover .text {
+	color: transparent;
+}
+
+.delBTN:hover .icon {
+	width: 170px;
+	border-left: none;
+	transform: translateX(0);
+}
+
+.delBTN:focus {
+	outline: none;
+}
+.question{
+    margin-top: 3px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.question:hover{
+    background-color: rgb(101, 152, 184);
+
+}
+.questionx{
+    float: right;
+    color: white;
+    margin: 10px;
+    cursor: pointer;
+}
+#pop-up-text{
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-left: 6%;
+    margin-bottom: 2%;
+}
+.sub-pop{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2%;
+}
+.pop-up{
+    text-align: center;
+    margin-left: 42%;
+    background-color: #21304d;
+    width: 28%;
+    height: auto;
+    position: absolute;
+    justify-content: center;
+    margin-top: 30%;
+    border-radius: 10px;
+
+    
+}
+.pop-up-top{
+    height: 180vh;
+    background-color: rgba(0,0,0,0.5);
+    width: 150%;
+    margin-top: -38%;
+    position: fixed;
+    margin-left: -50%;
+}

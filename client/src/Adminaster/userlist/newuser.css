@@ -1,0 +1,168 @@
+.left {
+  display: inline-table;
+  position: absolute;
+  height: 40vh;
+  background-color: rgb(55, 48, 91);
+  width: 12%;
+  margin-left: 9%;
+  margin-bottom: 5%;
+  border-radius: 10px;
+  margin-top: 15%;
+  padding-top: 1%;
+}
+.x{
+  float: right;
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: -5px;
+}
+.form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2%;
+}
+
+.group {
+  position: relative;
+  margin-bottom: 45px;
+}
+
+input {
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  display: block;
+  width: 300px;
+  border: none;
+  border-bottom: 1px solid #757575;
+  border-radius: 5px;
+}
+
+input:focus {
+  outline: none;
+}
+
+hr {
+  width: 100%;
+  background-color: white;
+  font-weight: bold;
+  margin: 0;
+  margin-bottom: 8%;
+}
+
+.updatebtn {
+  border-radius: 10px;
+  width: 30%;
+  height: 5vh;
+}
+
+.updatebtn:hover {
+  background-color: #683e97;
+  outline: none;
+}
+
+label {
+  color: #999;
+  font-size: 18px;
+  font-weight: normal;
+  position: absolute;
+  pointer-events: none;
+  left: 5px;
+  top: 10px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+
+input:focus~label,
+input:valid~label {
+  top: -20px;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+
+.bar {
+  position: relative;
+  display: block;
+  width: 300px;
+}
+
+.bar:before,
+.bar:after {
+  content: '';
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: #5264AE;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.bar:before {
+  left: 50%;
+}
+
+.bar:after {
+  right: 50%;
+}
+
+input:focus~.bar:before,
+input:focus~.bar:after {
+  width: 50%;
+}
+
+.highlight {
+  position: absolute;
+  height: 60%;
+  width: 100px;
+  top: 25%;
+  left: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+#span {
+  font-family: 'Fredoka', sans-serif;
+}
+
+#eror {
+  color: red;
+  font-weight: bold;
+}
+
+.cancel {
+  margin-right: 10px;
+}
+.acceptbtn {
+  margin-bottom: 10px;
+  margin-top: -13px;
+  width: 66px;
+  padding: 8px 8px 8px 8px;
+  text-align: center;
+  float: right;
+  border: 1px solid white;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  margin-left: 10px;
+  font-weight: bold;
+}
+.acceptbtn:hover {
+  background-color: #7b689e;
+  border: 1px solid #7b689e;
+  color: white;
+}
+.behind {
+  z-index: 1;
+  width: 152%;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  height: 138vh;
+  background-color: rgba(0, 0, 0, 0.658);
+  margin-top: -28%;
+  margin-left: -46%;
+}

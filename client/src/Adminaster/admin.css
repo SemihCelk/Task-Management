@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    overflow: hidden;
+}
+.sidebar-text{
+    word-spacing: 2px;
+    line-height: 21px;
+    margin-top: 7px;
+}
+.nav-bar {
+    background-color: rgb(97, 77, 129);
+    position: relative;
+    min-height: 60px;
+}
+
+#navbartext {
+    color: white;
+    margin-left: 4%;
+    padding-top:0.8% ;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+}
+.logout{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    margin-top: -13px;
+}
+.logout:hover{
+    font-size: 25px;
+    transition: 0.2s;
+}
+.sidebar {
+    min-width: 15%;
+    width: auto;
+    background-color: #2b203e;
+    color: white;
+    float: left;
+    height: 93.8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebaritems {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+} 
+
+.content {
+    background-color: #11121f;
+    color: white;
+    height: 93.8vh;
+    display: flex;
+    margin-left: 15%;
+    overflow-y: auto;
+}
+
+.sidebar-userlist{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    border-bottom: 1PX solid white;
+    cursor: pointer;
+    margin-left: 10%;
+    margin-right: 15%;
+}
+.logout-btn {
+    margin-right: 1%;
+    float: right;
+    display: flex;
+    margin-top: -10px;
+}

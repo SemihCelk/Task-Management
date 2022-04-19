@@ -1,0 +1,47 @@
+.addsummary {
+    display: block;
+    background-color: rgb(55, 48, 91);
+    width: auto;
+    height: auto;
+    position: absolute;
+    margin-top: 18%;
+    border-radius: 10px;
+    padding-top: 15px;
+}
+
+.addsummary-input {
+    width: 80%;
+    display: block;
+    margin-bottom: 3%;
+    position: relative;
+}
+
+.textarea {
+    width: 80%;
+    resize: none;
+    height: 10vh;
+}
+
+ß .textarea:focus {
+    outline: none;
+}
+
+/* .select-add-summary{
+    float: right;
+    margin-left: 5px;
+    margin-top: -14%;
+    margin-right: 31%;
+} */
+.btn-add-summary {
+    margin-top: 3%;
+    margin-right: 8%;
+
+}
+
+.textarea-div {
+    display: block;
+}
+.x-add-summary{
+    float: right;
+    margin-right: 8%;
+}

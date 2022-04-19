@@ -1,0 +1,29 @@
+* {
+    margin: 0%;
+    padding: 0%;
+    
+}
+
+.userpage {
+    background-color: #292d4d;
+    height: 100vh;
+}
+.btn-user{
+    margin-right: 2%;
+    float: right;
+}
+.user-navbar{
+    background-color: rgb(172, 122, 192);
+    height:75px;
+}
+
+.project-table {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+#h2{
+    text-align: center;
+    color: white;
+    margin-top: 2%;
+}

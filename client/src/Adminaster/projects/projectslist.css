@@ -1,0 +1,40 @@
+.project{
+    width: 100%;
+}
+.project-main-div{
+width: 100%;
+overflow: auto;
+}
+.project-table-div{
+    width: auto;
+    margin-left: auto;
+    /* display: flex; */
+    margin-top: 1%;
+    justify-content: center;
+    margin-left: 16%;
+}
+#projectlist-table{
+    width: 80%;
+    margin-bottom: 10%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 8%;
+}
+
+h2{
+    margin-top: 5%;
+    margin-left: 5%;
+}
+.open-folder{
+    cursor: pointer;
+}
+.edit{
+    cursor: pointer;
+}
+.dustbin{
+    cursor: pointer;
+}
+.btn-right{
+    margin-right: 4%;
+    margin-top: 2%;
+}

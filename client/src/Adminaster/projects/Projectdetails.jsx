@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./projectdetails.css";
 import SummaryAdd from "./SummaryAdd";
 import Projectuseradd from "./Projectuseradd";
+import Editsummary from "./Editsummary";
 function Projectdetails({
   projectname,
   setFolder,
@@ -9,14 +10,17 @@ function Projectdetails({
   id,
   setProjectlist,
   summary,
+  itemLoading,
 }) {
+  const [showEdit, setShowedit] = useState(false);
   const [showsummaryadd, setShowsummaryadd] = useState(false);
   const [del, setDel] = useState(false);
   const [idHold, setIdhold] = useState();
   const [userAdd, setUseradd] = useState(false);
   const [userlist, setUserlist] = useState([]);
   const [summaryUserfilter, setUserfilter] = useState([]);
-  // console.log(summaryUserfilter)
+  const [data, setData] = useState([]);
+  const [tarih,setTarih]=useState([])
   const loadData = () => {
     const requestOptions = {
       method: "GET",
@@ -44,10 +48,9 @@ function Projectdetails({
     const requestOptions = {
       method: "DELETE",
     };
-    console.log(id);
     fetch("http://localhost:5000/api/project/summary/" + idHold, requestOptions)
       .then((response) => response.json())
-      .finally(summary(id))
+      .finally(summary)
       .catch((error) => console.log("error", error));
   };
 
@@ -117,17 +120,28 @@ function Projectdetails({
         <span className="icon">+</span>
       </button>
       <br></br>
+      {itemLoading && <div>Loading...</div>}
       {showsummaryadd && (
         <SummaryAdd
           id={id}
           setShowsummaryadd={setShowsummaryadd}
           summaryData={summary}
-          idHold={idHold}
           summaryUserfilter={summaryUserfilter}
         />
       )}
       {userAdd && (
         <Projectuseradd setUseradd={setUseradd} userlist={userlist} id={id} />
+      )}
+      {showEdit && (
+        <Editsummary
+          summaryUserfilter={summaryUserfilter}
+          id={id}
+          setShowedit={setShowedit}
+          idHold={idHold}
+          data={data}
+         tarih={tarih}
+          summaryData={summary}
+        />
       )}
       <br></br>
       <div className="details-table">
@@ -146,28 +160,43 @@ function Projectdetails({
           </thead>
           <tbody>
             {details.map((item, i) => {
-              return (
-                <tr key={i}>
-                  <td>{item.id}</td>
-                  <td>{item.taskuser}</td>
-                  <td>{item.summary}</td>
-                  <td>{item.description}</td>
-                  <td>{item.start}</td>
-                  <td>{item.finish}</td>
-                  <td>
-                    <i className="fa-solid fa-pen-to-square edit"></i>
-                  </td>
-                  <td>
-                    <i
-                      className="fa-solid fa-trash dustbin"
-                      onClick={() => {
-                        setDel(true);
-                        setIdhold(item.id);
-                      }}
-                    ></i>
-                  </td>
-                </tr>
-              );
+                const createdAt = new Date(item.start);
+                const createdDate = createdAt.toLocaleDateString('tr-TR');
+                const finishtime = new Date(item.finish);
+                const finished = finishtime.toLocaleDateString('tr-TR');
+              if (item.projectid === id)
+                return (
+                  <tr key={i}>
+                    <td>{item.id}</td>
+                    <td>{item.taskuser}</td>
+                    <td>{item.summary}</td>
+                    <td>{item.description}</td>
+                    <td>{createdDate}</td>
+                    <td>{finished}</td>
+                    <td>
+                      <i
+                        className="fa-solid fa-pen-to-square edit"
+                        onClick={() => {
+                          userfilter();
+                          setShowedit(true);
+                          setIdhold(item.id);
+                          setData(item);
+                          setTarih([createdDate,finished])
+                        }}
+                      ></i>
+                    </td>
+                    <td>
+                      <i
+                        className="fa-solid fa-trash dustbin"
+                        onClick={() => {
+                          setDel(true);
+                          setIdhold(item.id);
+                          console.log(item.id);
+                        }}
+                      ></i>
+                    </td>
+                  </tr>
+                );
             })}
           </tbody>
         </table>

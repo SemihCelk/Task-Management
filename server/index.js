@@ -7,6 +7,9 @@ const client = new pg.Client({
   connectionString:
     "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
 });
+pg.types.setTypeParser(1114, function(stringValue) {
+  return stringValue;  //1114 for time without timezone type
+});
 client.connect();
 app.use(cors());
 app.use(express.json());
@@ -89,7 +92,7 @@ app.get("/api/projects", async (req, res, next) => {
     const projectgetir = await client.query(projectlist);
     res.json(projectgetir.rows);
   } catch (error) {
-    console.log("hata");
+    console.log("hata"); 
     next(error);
   }
 });
@@ -115,11 +118,38 @@ app.post("/api/projects", async (req, res, next) => {
     console.log("hata");
     next(error);
   }
-}); //project summary list
-app.get("/api/project/summary/:id/", async (req, res, next) => {
+});  
+  // //Project summary edit
+  app.put("/api/summary/:id/", async (req, res, next) => {
+    console.log(req.params.id)
+    const taskuser = req.body.userid;
+    const summary = req.body.summary;
+    const description = req.body.description;
+    const start = req.body.start;
+    const finish = req.body.finish;
+    try {
+      console.log(taskuser,summary,description,start,finish)
+      const update =
+        "UPDATE task SET taskuser=$1, summary=$2, description=$3, start=$4, finish=$5 WHERE id=$6";
+      const updater = await client.query(update, [
+        taskuser,
+        summary,
+        description, 
+        start,
+        finish,
+        req.params.id
+      ]); 
+      res.json("a");
+    } catch (error) {
+      next(error);  
+    }
+  });
+  //Summary List
+app.post("/api/projects/summary/", async (req, res, next) => {
   try {
-    const summarylist = `SELECT * FROM task WHERE projectid=$1`;
-    const summarygetir = await client.query(summarylist, [req.params.id]);
+
+    const summarylist = `SELECT * FROM task`;
+    const summarygetir = await client.query(summarylist);
     res.json(summarygetir.rows);
   } catch (error) {
     console.log("hata");
@@ -134,19 +164,18 @@ app.post("/api/projects/:id/", async (req, res, next) => {
     const projectuser =
       "insert into projectuser(userid,projectid) values($1,$2) returning*;";
     const userAdd = await client.query(projectuser, [userid, projectid]);
-    res.json(userAdd.rows); 
+    res.json(userAdd.rows);
   } catch (error) {
     console.log("hata");
     next(error);
-  } 
-}); 
+  }
+});
 //project user filter
-app.get("/api/project/user",async(req,res,next)=>{
+app.get("/api/project/user", async (req, res, next) => {
   try {
     const list = "SELECT * FROM public.projectuser ORDER BY id";
     const getir = await client.query(list);
     res.json(getir.rows);
-    console.log(getir.rows)
   } catch (error) {
     next(error);
   }
@@ -210,7 +239,7 @@ app.post("/api/user", async (req, res, next) => {
 app.post("/api/project/summary", async (req, res, next) => {
   try {
     const projectid = req.body.id;
-    const taskuser = req.body.data;
+    const taskuser = req.body.userid;
     const summary = req.body.summary;
     const description = req.body.description;
     const start = req.body.start;
@@ -236,6 +265,7 @@ app.delete("/api/project/summary/:id/", async (req, res, next) => {
     const deletesummary = "delete from task where id=$1";
     const singledeleter = await client.query(deletesummary, [req.params.id]);
     res.json([singledeleter]);
+    console.log(req.params.id)
   } catch (error) {
     next(error);
   }
@@ -283,10 +313,12 @@ app.delete("/api/user/:id/", async (req, res, next) => {
     const singledeleter = await client.query(singledel, [req.params.id]);
     const delpuser = await client.query(deleteprojectuser, [req.params.id]);
     res.json(singledeleter);
+    console.log("silimdi.")
   } catch (error) {
     next(error);
   }
 });
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const message = err.message || "Unknown Error";

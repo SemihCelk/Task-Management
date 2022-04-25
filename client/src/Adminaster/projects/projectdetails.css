@@ -21,3 +21,6 @@ table{
     margin-top: 2%;
     padding-bottom: 5%;
 }
+.fa-xmark{
+cursor: pointer;
+}

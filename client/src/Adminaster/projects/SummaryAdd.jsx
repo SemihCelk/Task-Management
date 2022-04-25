@@ -1,28 +1,24 @@
 import React, { useState } from "react";
 import "./addsummary.css"
-import Projectuseradd from "./Projectuseradd";
-export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,idHold,summaryUserfilter}) {
+export default function SummaryAdd({ id, setShowsummaryadd ,summaryData,summaryUserfilter}) {
   const [userid, setUserid] = useState();
   const [summary, setSummary] = useState();
   const [description, setDescription] = useState();
   const [start, setStart] = useState();
   const [finish, setFinish] = useState();
-  const data = 27//silinecek
  
   const addTask = () => {
     console.log(id,summary,description,start,finish)
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id,summary,description,start,finish,data }),
+      body: JSON.stringify({ id,summary,description,start,finish,userid }),
     }; 
     fetch("http://localhost:5000/api/project/summary", requestOptions)
       .then((res) => res.json())
-      .finally(summaryData(id))
+      .finally(summaryData)
       .catch((err) => console.log(err.data));
   };
-
-
   return (
     <div className="addprojectbehind">
       <div className="container addsummary">

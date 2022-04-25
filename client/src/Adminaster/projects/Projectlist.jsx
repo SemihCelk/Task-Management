@@ -12,6 +12,8 @@ function Projectlist({
   setFolder,
   projects,
   setProjectlist,
+  loading
+  
 }) {
   return (
     <div>
@@ -28,6 +30,9 @@ function Projectlist({
           <span className="icon">+</span>
         </button>
         <br></br>
+        {loading &&(
+        <div>Loading...</div>
+      )}
         <div className="project-table-div">
           <table id="projectlist-table">
             <thead>

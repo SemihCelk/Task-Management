@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
 function Editproject({ setshowprojectedit, id, projectname, projectData,userlist,loadData}) {
-  const [projectid, setProjectid] = useState(id);
   const [projectName, setProjectname] = useState(projectname);
-  const [userid,setUserid]=useState()
   const editproject = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -11,7 +9,7 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
       method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
-        projectName,userid
+        projectName
       }),
       redirect: "follow",
     };
@@ -41,33 +39,11 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
         <form>
           <input
             className="addnewproject-input"
-            placeholder="id"
-            value={projectid}
-            onChange={(e) => setProjectid(e.target.value)}
-            required
-          ></input>
-          <input
-            className="addnewproject-input"
             placeholder="project name"
             value={projectName}
             onChange={(e) => setProjectname(e.target.value)}
             required
           ></input>
-          <select
-            className="select"
-            onChange={(e) => {
-              setUserid(e.target.value);
-            }}
-          >
-            <option value={null}>Choose one</option>
-            {userlist.map((item, i) => {
-              return (
-                <option key={i} value={item.id}>
-                  {item.id} {item.name}
-                </option>
-              );
-            })}
-          </select>
         </form>
         <button className="acceptbtn btn-top-projectadd" onClick={editproject}>Add</button>
         <button

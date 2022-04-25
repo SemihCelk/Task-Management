@@ -57,6 +57,7 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
           >
             <option value={null}>Choose one</option>
             {userlist.map((item, i) => {
+              console.log(item.id)
               return (
                 <option key={i} value={item.id}>
                   {item.id} {item.name}

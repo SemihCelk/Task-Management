@@ -42,6 +42,7 @@ app.post("/login", (req, res) => {
             username: user.name,
             isAdmin: user.isAdmin,
             accessToken,
+            userid: user.id
           });
         }
       }
@@ -148,7 +149,7 @@ app.post("/api/projects", async (req, res, next) => {
 app.post("/api/projects/summary/", async (req, res, next) => {
   try {
 
-    const summarylist = `SELECT * FROM task`;
+    const summarylist = `SELECT * FROM task ORDER BY id`;
     const summarygetir = await client.query(summarylist);
     res.json(summarygetir.rows);
   } catch (error) {

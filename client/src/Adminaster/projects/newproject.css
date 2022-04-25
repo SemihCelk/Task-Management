@@ -45,3 +45,14 @@ select:focus{
     margin-top: 10%;
     margin-right: 5%;
 }
+.updateproject{
+    display: inline-table;
+    position: absolute;
+    height: auto;
+    background-color: rgb(55, 48, 91);
+    width: 11%;
+    margin-left: 9%;
+    border-radius: 10px;
+    margin-top: 22%;
+    padding-top: 0.5%;
+}

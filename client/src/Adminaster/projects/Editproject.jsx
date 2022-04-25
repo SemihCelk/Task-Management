@@ -25,7 +25,7 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
  
   return (
     <div className="addprojectbehind">
-      <div className="container addproject">
+      <div className="container updateproject">
         <div>
           <span id="spanupdate">Project Edit</span>
           <i

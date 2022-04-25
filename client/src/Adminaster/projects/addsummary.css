@@ -22,16 +22,21 @@
     height: 10vh;
 }
 
-ß .textarea:focus {
+.textarea:focus {
     outline: none;
 }
 
-/* .select-add-summary{
-    float: right;
-    margin-left: 5px;
-    margin-top: -14%;
-    margin-right: 31%;
-} */
+.scrollable {
+    overflow: auto;
+    overflow-x: hidden;
+    width: 110px;
+}
+
+.scrollable select {
+    border: none;
+
+}
+
 .btn-add-summary {
     margin-top: 3%;
     margin-right: 8%;
@@ -41,7 +46,8 @@
 .textarea-div {
     display: block;
 }
-.x-add-summary{
+
+.x-add-summary {
     float: right;
     margin-right: 8%;
 }

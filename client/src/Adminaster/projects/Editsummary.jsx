@@ -1,4 +1,4 @@
-import { React, useState,useEffect } from "react";
+import { React, useState} from "react";
 
 function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryData,tarih}) {
   const [userid, setUserid] = useState(data.taskuser);
@@ -6,7 +6,6 @@ function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryDa
   const [description, setDescription] = useState(data.description);
   const [start, setStart] = useState(tarih[0]);
   const [finish, setFinish] = useState(tarih[1]);
-console.log(tarih[1])
   const editSummary = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -30,7 +29,7 @@ console.log(tarih[1])
     <div className="addprojectbehind">
       <div className="container addsummary">
         <div>
-          <span id="spanupdate">Add Summary</span>
+          <span id="spanupdate">Edit Summary</span>
           <i
             className="fa-solid fa-xmark x-add-summary"
             onClick={() => {
@@ -72,21 +71,22 @@ console.log(tarih[1])
             onChange={(e) => setFinish(e.target.value)}
             required
           ></input>
-          <select
+          <div className="scrollable">
+          <select size={1}
             className="select"
             value={userid}
             onChange={(e) => {
               setUserid(e.target.value);
             }}
           >
-              <option>Choose one</option>
             {summaryUserfilter.map((item, i) => {
               if (item.projectid === id) {
-                
+                if(item.userid!==null)
                   return <option key={i}>{item.userid}</option>;
               }
             })}
           </select>
+          </div>
         </form>
         <button className="acceptbtn btn-add-summary" onClick={editSummary}>
           Add

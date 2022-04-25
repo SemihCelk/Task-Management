@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./login.css";
 
-function Login({ setIsAdmin, setToken,changeName }) {
+function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
   const [username, setName] = useState();
   const [password, setPasword] = useState();
   const [isLogin, setIsLogin] = useState();
@@ -31,6 +31,8 @@ function Login({ setIsAdmin, setToken,changeName }) {
           localStorage.setItem("isAdmin", res.isAdmin);
           changeName(res.username);
           localStorage.setItem("name", res.username);
+          setSpecialid(res.userid)
+          localStorage.setItem("id",res.userid)
         }
       });
   };

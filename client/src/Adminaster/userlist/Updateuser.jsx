@@ -51,6 +51,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
           <div className="update-data">
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="Name"
                 value={name}
@@ -64,6 +65,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="Surname"
                 value={surname}
@@ -77,6 +79,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="password"
                 value={password}
@@ -90,6 +93,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="E-mail"
                 name="mail"

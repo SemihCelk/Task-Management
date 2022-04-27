@@ -4,6 +4,7 @@ function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryDa
   const [userid, setUserid] = useState(data.taskuser);
   const [summary, setSummary] = useState(data.summary);
   const [description, setDescription] = useState(data.description);
+  const [status, setStatus] = useState(data.statusid);
   const [start, setStart] = useState(tarih[0]);
   const [finish, setFinish] = useState(tarih[1]);
   const editSummary = () => {
@@ -13,7 +14,7 @@ function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryDa
       method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
-        userid,summary,description,start,finish,idHold
+        userid,summary,description,start,finish,idHold,status
       }),
       redirect: "follow",
     };
@@ -71,6 +72,19 @@ function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryDa
             onChange={(e) => setFinish(e.target.value)}
             required
           ></input>
+          <div >
+          <select size={1}
+          value={status}
+          onChange={(e) => {
+            setStatus(e.target.value);
+          }}
+          >
+            <option value={"Open"}>Open</option>
+            <option value={"Progress"}>Progress</option>
+            <option value={"Done"}>Done</option>
+          </select>
+          </div>
+          <br></br>
           <div className="scrollable">
           <select size={1}
             className="select"
@@ -79,6 +93,7 @@ function Editsummary({ setShowedit, id, summaryUserfilter ,idHold,data,summaryDa
               setUserid(e.target.value);
             }}
           >
+            <option value={7}>Choose One</option>
             {summaryUserfilter.map((item, i) => {
               if (item.projectid === id) {
                 if(item.userid!==null)

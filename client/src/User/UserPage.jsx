@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "./user.css";
+import UserPopup from "./UserPopup";
 function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
   const [projects, setProjects] = useState([]);
   const [listen, setListen] = useState(true);
   const [details, setDetails] = useState([]);
-  const [asd, setAsd] = useState(true);
-  const [userid, setUserid] = useState([]);
+  const [subdetail, setSubdetails] = useState([]);
   const [summaryUserfilter, setUserfilter] = useState([]);
+  const [folderPop, setFolderpop] = useState(false);
   const data = () => {
     const requestOptions = {
       method: "GET",
@@ -19,13 +20,12 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
   };
   const summary = () => {
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       redirect: "follow",
     };
-    fetch("http://localhost:5000/api/projects/summary/", requestOptions)
+    fetch("http://localhost:5000/api/projects/summary", requestOptions)
       .then((response) => response.json())
       .then((result) => setDetails(result))
-      .finally(console.log(details))
       .catch((error) => console.log("error", error));
   };
   const userfilter = () => {
@@ -45,22 +45,23 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
     userfilter();
     setListen(false);
   }
-  if (asd) {
-    details.map((item) => {
-      if (item.taskuser !== userSpecialid) {
-        setAsd(false);
-        setUserid(item.taskuser);
-        return <div>aa</div>;
+  const folder = () => {
+    const data = parseInt(userSpecialid);
+    details.map((item)=>{
+    console.log(item.taskuser,data)
+      if (item.taskuser === data) {
+        setSubdetails(item)
+        setFolderpop(true);
       }
-    });
-  }
-console.log(summaryUserfilter)
+    })
+
+  };
   return (
     <div className="userpage">
-      <div className="nav-bar">
-        <div id="navbartext"> hoşgeldin {name}</div>
+      <div className="top-bar">
+        <div id="navbar-text"> Welcome {name}</div>
         <div className="logout-btn">
-          <div className="logout-btn">
+          <div className="logout-btn-user">
             <i
               className="fa-solid fa-arrow-right-from-bracket logout"
               title="Log Out"
@@ -75,35 +76,44 @@ console.log(summaryUserfilter)
       </div>
       <div className="user-body">
         <h2 id="h2">Projects</h2>
+        {folderPop &&(
+          <UserPopup
+          subdetail={subdetail}
+          setFolderpop={setFolderpop}
+          />
+        )
+        
+          }
         <div className="project-table">
           <table style={{ color: "white" }}>
             <thead>
               <tr>
-                <th>Id</th>
+                <th>Number</th>
                 <th>Project Name</th>
                 <th>Details</th>
               </tr>
             </thead>
-            <tbody>
-              {projects.map((item, i) => {
-                console.log(item);
-                return (
-                  <tr key={i}>
-                    <td>{item.id}</td>
-                    <td>{item.project_name}</td>
-                    <td>
-                      <button
-                        onClick={() => {
-                      
-                        }}
-                      >
-                        Details
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
+            {summaryUserfilter.map((item, key) => {
+              const data = parseInt(userSpecialid);
+              return (
+                <tbody key={key}>
+                  {projects.map((proje, i) => {
+                    if (item.userid === data && item.projectid === proje.id) {
+                      console.log(item.projectid, proje.id);
+                      return (
+                        <tr key={i}>
+                          <td>{proje.id}</td>
+                          <td>{proje.project_name}</td>
+                          <td>
+                            <i className="fa-solid fa-folder-open open-folder" onClick={folder}></i>
+                          </td>
+                        </tr>
+                      );
+                    }
+                  })}
+                </tbody>
+              );
+            })}
           </table>
         </div>
       </div>

@@ -18,9 +18,9 @@ function Projectlist({
   return (
     <div>
       <h2>Projects List</h2>
-      <div className="project-main-div">
+      <div className="">
         <button
-          className="delBTN"
+          className="project-list-btn"
           onClick={() => {
             loadData();
             setshowproject(true);

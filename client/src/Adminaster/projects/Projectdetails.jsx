@@ -20,7 +20,7 @@ function Projectdetails({
   const [userlist, setUserlist] = useState([]);
   const [summaryUserfilter, setUserfilter] = useState([]);
   const [data, setData] = useState([]);
-  const [tarih,setTarih]=useState([])
+  const [tarih, setTarih] = useState([]);
   const loadData = () => {
     const requestOptions = {
       method: "GET",
@@ -139,19 +139,20 @@ function Projectdetails({
           setShowedit={setShowedit}
           idHold={idHold}
           data={data}
-         tarih={tarih}
+          tarih={tarih}
           summaryData={summary}
         />
       )}
       <br></br>
-      <div className="details-table">
-        <table>
+      <div className="userlist-table-div">
+        <table id="userlist-table">
           <thead>
-            <tr>
+          <tr>
               <th>ID</th>
               <th>User ID</th>
               <th>SUMMARY</th>
               <th>DESCRİPTİON</th>
+              <th>Status</th>
               <th>STARTED</th>
               <th>FİNİSH</th>
               <th>Edit</th>
@@ -160,17 +161,18 @@ function Projectdetails({
           </thead>
           <tbody>
             {details.map((item, i) => {
-                const createdAt = new Date(item.start);
-                const createdDate = createdAt.toLocaleDateString('tr-TR');
-                const finishtime = new Date(item.finish);
-                const finished = finishtime.toLocaleDateString('tr-TR');
+              const createdAt = new Date(item.start);
+              const createdDate = createdAt.toLocaleDateString("tr-TR");
+              const finishtime = new Date(item.finish);
+              const finished = finishtime.toLocaleDateString("tr-TR");
               if (item.projectid === id)
                 return (
                   <tr key={i}>
                     <td>{item.id}</td>
                     <td>{item.taskuser}</td>
-                    <td>{item.summary}</td>
-                    <td>{item.description}</td>
+                    <td id="fill">{item.summary}</td>
+                    <td id="fill">{item.description}</td>
+                    <td>{item.statusid}</td>
                     <td>{createdDate}</td>
                     <td>{finished}</td>
                     <td>
@@ -181,7 +183,7 @@ function Projectdetails({
                           setShowedit(true);
                           setIdhold(item.id);
                           setData(item);
-                          setTarih([createdDate,finished])
+                          setTarih([createdDate, finished]);
                         }}
                       ></i>
                     </td>

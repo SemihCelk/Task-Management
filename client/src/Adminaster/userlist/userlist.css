@@ -60,10 +60,10 @@ table {
 	height: 40px;
 	width: 40px;
 	display: flex;
-	/* align-items: center; */
 	justify-content: center;
     color: white;
     font-size: 25px;
+    font-weight: bold;
     }
 
 

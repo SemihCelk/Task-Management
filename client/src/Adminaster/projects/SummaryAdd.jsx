@@ -13,10 +13,11 @@ export default function SummaryAdd({
   const [finish, setFinish] = useState();
   const addTask = () => {
     console.log(id, summary, description, userid,start, finish);
+    const status = "Open"
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, summary, description, start, finish, userid }),
+      body: JSON.stringify({ id, summary, description, start, finish, userid,status }),
     };
     console.log(userid,"ssss")
     fetch("http://localhost:5000/api/project/summary", requestOptions)
@@ -38,14 +39,14 @@ export default function SummaryAdd({
           ></i>
         </div>
         <hr className="line" />
-        <form>
+        <form className="form-add-summary">
           <input
+          autoComplete="off"
             className="addsummary-input"
             placeholder="summary"
             onChange={(e) => setSummary(e.target.value)}
             required
           ></input>
-          <br></br>
           <div className="textarea-div">
             <textarea
               className="textarea"
@@ -54,14 +55,15 @@ export default function SummaryAdd({
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
-          <br></br>
           <input
+          autoComplete="off"
             className="addsummary-input"
             placeholder="started time"
             onChange={(e) => setStart(e.target.value)}
             required
           ></input>
           <input
+          autoComplete="off"
             className="addsummary-input"
             placeholder="finish time"
             onChange={(e) => setFinish(e.target.value)}
@@ -75,6 +77,7 @@ export default function SummaryAdd({
             }}
             value={userid}
           >
+            <option value={7}>Choose One</option>
             {summaryUserfilter.map((item, i) => {
               if (item.projectid === id) {
                 if(item.userid!==null)

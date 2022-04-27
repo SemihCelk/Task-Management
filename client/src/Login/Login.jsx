@@ -45,7 +45,7 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
             <input
               type="text"
               placeholder="User Name"
-              name="username"
+              name="username" autoComplete="off"
               onChange={(e) => setName(e.target.value)}
             ></input>
             <label>User Name</label>

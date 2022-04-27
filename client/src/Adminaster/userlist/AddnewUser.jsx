@@ -45,6 +45,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
           <div className="update-data">
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="Name*"
                 name="name"
@@ -57,6 +58,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="Surname*"
                 name="surname"
@@ -69,6 +71,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="Password*"
                 name="password"
@@ -81,6 +84,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
             </div>
             <div className="group">
               <input
+              autoComplete="off"
                 type="text"
                 placeholder="E-mail*"
                 name="email"

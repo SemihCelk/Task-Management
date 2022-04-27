@@ -128,16 +128,19 @@ app.post("/api/projects", async (req, res, next) => {
     const description = req.body.description;
     const start = req.body.start;
     const finish = req.body.finish;
+    const status = req.body.status
+    console.log(status)
     try {
-      console.log(taskuser,summary,description,start,finish)
+      console.log(taskuser,summary,description,start,finish,status)
       const update =
-        "UPDATE task SET taskuser=$1, summary=$2, description=$3, start=$4, finish=$5 WHERE id=$6";
-      const updater = await client.query(update, [
+        "UPDATE task SET taskuser=$1, summary=$2, description=$3, start=$4, finish=$5 , statusid=$6 WHERE id=$7";
+      const updater = await client.query(update, [ 
         taskuser,
         summary,
         description, 
-        start,
+        start, 
         finish,
+        status,
         req.params.id
       ]); 
       res.json("a");
@@ -145,8 +148,8 @@ app.post("/api/projects", async (req, res, next) => {
       next(error);  
     }
   });
-  //Summary List
-app.post("/api/projects/summary/", async (req, res, next) => {
+//SummaryList
+app.get("/api/projects/summary/", async (req, res, next) => {
   try {
 
     const summarylist = `SELECT * FROM task ORDER BY id`;
@@ -168,9 +171,9 @@ app.post("/api/projects/:id/", async (req, res, next) => {
     res.json(userAdd.rows);
   } catch (error) {
     console.log("hata");
-    next(error);
+    next(error); 
   }
-});
+}); 
 //project user filter
 app.get("/api/project/user", async (req, res, next) => {
   try {
@@ -205,7 +208,8 @@ app.put("/api/projects/:id/", async (req, res, next) => {
 //Proje silme
 app.delete("/api/projects/:id/", async (req, res, next) => {
   try {
-    const deleteprojectuser = "delete from projectuser where id= $1";
+    console.log(req.params.id)
+    const deleteprojectuser = "delete from projectuser where projectid= $1";
     const singledel = `delete from project where id = $1`;
     const delpuser = await client.query(deleteprojectuser, [req.params.id]);
     const singledeleter = await client.query(singledel, [req.params.id]);
@@ -245,8 +249,9 @@ app.post("/api/project/summary", async (req, res, next) => {
     const description = req.body.description;
     const start = req.body.start;
     const finish = req.body.finish;
+    const status = req.body.status;
     const sql =
-      "insert into task(projectid,taskuser,summary,description,start,finish) values($1,$2,$3,$4,$5,$6) returning*;";
+      "insert into task(projectid,taskuser,summary,description,start,finish,statusid) values($1,$2,$3,$4,$5,$6,$7) returning*;";
     const response = await client.query(sql, [
       projectid,
       taskuser,
@@ -254,6 +259,7 @@ app.post("/api/project/summary", async (req, res, next) => {
       description,
       start,
       finish,
+      status
     ]);
     res.json([response.rows]);
   } catch (error) {

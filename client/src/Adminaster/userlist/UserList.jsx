@@ -41,7 +41,7 @@ function UserList() {
   };
   return (
     <div className="userlist-maindiv">
-      <h3>UserList Management</h3>
+      <h2>UserList Management</h2>
       <button
         className="delBTN"
         onClick={() => {
@@ -51,6 +51,7 @@ function UserList() {
         <span className="text">Add New User</span>
         <span className="icon">+</span>
       </button>
+      <br></br>
       <br></br>
       {deleted && (
         <div className="pop-up-top">

@@ -55,7 +55,7 @@ function Project() {
 
   const summary = () => {
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       redirect: "follow",
     };
     fetch("http://localhost:5000/api/projects/summary/", requestOptions)

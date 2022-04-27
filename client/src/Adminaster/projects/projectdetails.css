@@ -1,26 +1,26 @@
 .details-box{
     background-color: #11121f;
-    width: auto;
+    width: 100%;
     height: auto;
+    display: inline-table;
 }
 table{
     border-collapse: collapse;
-    text-align: center;
+    text-align: center; 
     width: 85%;
-
 }
 .project-details-x{
-    margin-top: -4.5%;
     font-size: 20px;
-}
-.details-right-btn{
-    margin-right: 2%;
-}
-.details-table{
-    margin-left: 7%;
-    margin-top: 2%;
-    padding-bottom: 5%;
 }
 .fa-xmark{
 cursor: pointer;
+}
+#fill{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 75px;
+}
+table tr td{
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }

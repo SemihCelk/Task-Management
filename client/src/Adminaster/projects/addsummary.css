@@ -7,6 +7,8 @@
     margin-top: 18%;
     border-radius: 10px;
     padding-top: 15px;
+    margin-left: 10%;
+    padding-bottom: 5px;
 }
 
 .addsummary-input {
@@ -40,14 +42,55 @@
 .btn-add-summary {
     margin-top: 3%;
     margin-right: 8%;
-
 }
 
 .textarea-div {
+    margin-bottom: 1%;
     display: block;
 }
 
 .x-add-summary {
     float: right;
     margin-right: 8%;
+}
+.add-user{
+    padding-left: 12px;
+    display: block;
+    background-color: rgb(55, 48, 91);
+    width: 13%;
+    height: auto;
+    position: absolute;
+    margin-top: 18%;
+    border-radius: 10px;
+    padding-top: 15px;
+    padding-right: 10px;
+}
+.hr{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 7%;
+}
+.bottom{
+    margin-bottom: 5%;
+}
+.form-add-summary{
+    margin-left: 2%;
+    width: 115%;
+}
+.x-add-user{
+    float: right;
+}
+.add-user-hr{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 3%;
+    margin-top: 3%;
+}
+.btn-add-user {
+    margin-top: 3%;
+    margin-right: 2%;
 }

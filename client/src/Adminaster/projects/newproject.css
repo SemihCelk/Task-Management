@@ -10,9 +10,7 @@
     margin-top: 22%;
     padding-top: 1%
 }
-.select {
-    margin-left: 5px;
-}
+
 select:focus{
     outline: none;
 }
@@ -57,5 +55,33 @@ select:focus{
     padding-top: 0.5%;
 }
 #spanupdate{
+    letter-spacing: 1px;
     font-family:'Font Awesome 6 Free' ;
+}
+.first-select{
+    width: 110px;
+    margin-left: 13px;
+    margin-bottom: 10px;
+}
+.edit-form{
+    margin-left: 1%;
+}
+.edit-summary-area{
+    width: 99%;
+    resize: none;
+    height: 10vh;
+    border-radius: 5px;
+}
+.edit-input{
+        display: block;
+        margin-bottom: 3%;
+        position: relative;
+}
+.line-bottom{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 3%;
+    margin-top: 2%;
 }

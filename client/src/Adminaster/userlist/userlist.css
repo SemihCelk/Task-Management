@@ -126,6 +126,7 @@ table {
     
 }
 .pop-up-top{
+    z-index: 1;
     height: 180vh;
     background-color: rgba(0,0,0,0.5);
     width: 150%;

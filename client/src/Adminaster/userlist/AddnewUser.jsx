@@ -101,7 +101,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <span className="bar"></span>
               <label>E-mail*</label>
             </div>{" "}
-            <div style={{ marginTop: "-7%" }}>
+            <div style={{ marginTop: "-4%" }}>
               <span>Admin:</span>
               <select
                 name="ask"

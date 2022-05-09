@@ -60,7 +60,7 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
             <label>Password</label>
           </div>
           <div>
-            <input type="checkbox" onClick={togglePassword}></input>
+            <input type="checkbox" className="checkbox" onClick={togglePassword}></input>
             <div id="showwpassword">Show Password</div>
           </div>
           {isLogin && (

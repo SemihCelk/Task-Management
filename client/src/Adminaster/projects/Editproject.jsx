@@ -35,19 +35,26 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
             }}
           ></i>
         </div>
-        <hr className="line" />
+        <hr className="project-edit-hr-line" />
         <form>
-          <input
-            className="addnewproject-input"
-            placeholder="project name"
-            value={projectName}
-            onChange={(e) => setProjectname(e.target.value)}
-            required
-          ></input>
+        <div className="group">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="project name"
+                value={projectName}
+                name="name"
+                onChange={(e) => setProjectname(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>project name</label>
+            </div>
         </form>
-        <button className="acceptbtn btn-top-projectadd" onClick={editproject}>Add</button>
+        <button className="acceptbtn project-edit-btn" onClick={editproject}>Add</button>
         <button
-          className="acceptbtn btn-top-projectadd"
+          className="acceptbtn project-edit-btn"
           onClick={() => {
             setshowprojectedit(false);
           }}

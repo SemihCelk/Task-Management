@@ -40,13 +40,19 @@ export default function SummaryAdd({
         </div>
         <hr className="line" />
         <form className="form-add-summary">
-          <input
-          autoComplete="off"
-            className="addsummary-input"
-            placeholder="summary"
-            onChange={(e) => setSummary(e.target.value)}
-            required
-          ></input>
+        <div className="group">
+              <input
+              autoComplete="off"
+                type="text"
+            placeholder="Summary"
+                name="name"
+                onChange={(e) => setSummary(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>Summary</label>
+            </div>
           <div className="textarea-div">
             <textarea
               className="textarea"
@@ -55,20 +61,32 @@ export default function SummaryAdd({
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
-          <input
-          autoComplete="off"
-            className="addsummary-input"
-            placeholder="started time"
-            onChange={(e) => setStart(e.target.value)}
-            required
-          ></input>
-          <input
-          autoComplete="off"
-            className="addsummary-input"
-            placeholder="finish time"
-            onChange={(e) => setFinish(e.target.value)}
-            required
-          ></input>
+          <div className="group">
+              <input
+              placeholder="started time"
+              autoComplete="off"
+                type="text"
+                name="name"
+                onChange={(e) => setStart(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>started time</label>
+            </div>
+            <div className="group">
+              <input
+              placeholder="finish time"
+              autoComplete="off"
+                type="text"
+                name="name"
+                onChange={(e) => setFinish(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>finish time</label>
+            </div>
           <select
             className="select"
             onChange={(e) => {

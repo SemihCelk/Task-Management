@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./user.css";
-import UserPopup from "./UserPopup";
+import Userpagedetails from "./Userpagedetails";
 function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
   const [projects, setProjects] = useState([]);
   const [listen, setListen] = useState(true);
@@ -8,6 +8,9 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
   const [subdetail, setSubdetails] = useState([]);
   const [summaryUserfilter, setUserfilter] = useState([]);
   const [folderPop, setFolderpop] = useState(false);
+  const [userid, setUserid] = useState();
+  const [projectid, setProjectid] = useState();
+  const [show, setShow] = useState(true);
   const data = () => {
     const requestOptions = {
       method: "GET",
@@ -15,8 +18,7 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
     };
     fetch("http://localhost:5000/api/projects", requestOptions)
       .then((response) => response.json())
-      .then((result) => setProjects(result))
-      .catch((error) => console.log("error", error));
+      .then((result) => setProjects(result));
   };
   const summary = () => {
     const requestOptions = {
@@ -45,17 +47,6 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
     userfilter();
     setListen(false);
   }
-  const folder = () => {
-    const data = parseInt(userSpecialid);
-    details.map((item)=>{
-    console.log(item.taskuser,data)
-      if (item.taskuser === data) {
-        setSubdetails(item)
-        setFolderpop(true);
-      }
-    })
-
-  };
   return (
     <div className="userpage">
       <div className="top-bar">
@@ -74,49 +65,61 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
           </div>
         </div>
       </div>
-      <div className="user-body">
-        <h2 id="h2">Projects</h2>
-        {folderPop &&(
-          <UserPopup
+      {folderPop && (
+        <Userpagedetails
+          projectid={projectid}
+          userid={userid}
           subdetail={subdetail}
+          details={details}
           setFolderpop={setFolderpop}
-          />
-        )
-        
-          }
-        <div className="project-table">
-          <table style={{ color: "white" }}>
-            <thead>
-              <tr>
-                <th>Number</th>
-                <th>Project Name</th>
-                <th>Details</th>
-              </tr>
-            </thead>
-            {summaryUserfilter.map((item, key) => {
-              const data = parseInt(userSpecialid);
-              return (
-                <tbody key={key}>
-                  {projects.map((proje, i) => {
-                    if (item.userid === data && item.projectid === proje.id) {
-                      console.log(item.projectid, proje.id);
-                      return (
-                        <tr key={i}>
-                          <td>{proje.id}</td>
-                          <td>{proje.project_name}</td>
-                          <td>
-                            <i className="fa-solid fa-folder-open open-folder" onClick={folder}></i>
-                          </td>
-                        </tr>
-                      );
-                    }
-                  })}
-                </tbody>
-              );
-            })}
-          </table>
+          setShow={setShow}
+        />
+      )}{" "}
+      {show && (
+        <div className="user-body">
+          <h2 id="h2">Projects</h2>
+          <div className="project-table">
+            <table style={{ color: "white" }}>
+              <thead>
+                <tr>
+                  <th>Number</th>
+                  <th>Project Name</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              {summaryUserfilter.map((item, key) => {
+                const data = parseInt(userSpecialid);
+                return (
+                  <tbody key={key}>
+                    {projects.map((proje, i) => {
+                      if (item.userid === data && item.projectid === proje.id) {
+                        return (
+                          <tr key={i}>
+                            <td>{proje.id}</td>
+                            <td>{proje.project_name}</td>
+                            <td>
+                              <i
+                                className="fa-solid fa-folder-open open-folder"
+                                onClick={() => {
+                                  setUserid(item);
+                                  setProjectid(proje);
+                                  console.log(details);
+                                  setFolderpop(true);
+                                  setShow(false);
+                                }}
+                              ></i>
+                            </td>
+                          </tr>
+                        );
+                      }
+                    })}
+                  </tbody>
+                );
+              })}
+            </table>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

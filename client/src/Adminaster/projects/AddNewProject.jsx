@@ -37,18 +37,32 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
         </div>
         <hr className="line" />
         <form>
-          <input
-            className="addnewproject-input"
-            placeholder="id"
-            onChange={(e) => setProjectid(e.target.value)}
-            required
-          ></input>
-          <input
-            className="addnewproject-input"
-            placeholder="project name"
-            onChange={(e) => setProjectname(e.target.value)}
-            required
-          ></input>
+        <div className="group">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="ID"
+                name="id"
+                onChange={(e) => setProjectid(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>ID</label>
+            </div>
+            <div className="group">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="project name"
+                name="id"
+                onChange={(e) => setProjectname(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>project name</label>
+            </div>
           <select
             className="select"
             onChange={(e) => {

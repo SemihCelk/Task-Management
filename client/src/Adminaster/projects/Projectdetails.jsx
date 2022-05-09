@@ -172,7 +172,7 @@ function Projectdetails({
                     <td>{item.taskuser}</td>
                     <td id="fill">{item.summary}</td>
                     <td id="fill">{item.description}</td>
-                    <td>{item.statusid}</td>
+                    <td className={item.statusid}>{item.statusid}</td>
                     <td>{createdDate}</td>
                     <td>{finished}</td>
                     <td>

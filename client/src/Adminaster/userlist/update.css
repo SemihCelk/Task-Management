@@ -10,3 +10,20 @@
     margin-top: 15%;
     padding-top: 1%;
 }
+.update-line{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 3%;
+}
+.project-edit-hr-line{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 5%;
+}
+.project-edit-btn{
+    margin-right: 5%;
+}

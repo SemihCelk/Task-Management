@@ -46,7 +46,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
           ></i>
           <span id="spanupdate">Update Data</span>
         </div>
-        <hr></hr>
+        <hr className="update-line"></hr>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="update-data">
             <div className="group">

@@ -12,13 +12,15 @@ function Projectlist({
   setFolder,
   projects,
   setProjectlist,
+  loading
+  
 }) {
   return (
     <div>
       <h2>Projects List</h2>
-      <div className="project-main-div">
+      <div className="">
         <button
-          className="delBTN"
+          className="project-list-btn"
           onClick={() => {
             loadData();
             setshowproject(true);
@@ -28,15 +30,18 @@ function Projectlist({
           <span className="icon">+</span>
         </button>
         <br></br>
+        {loading &&(
+        <div>Loading...</div>
+      )}
         <div className="project-table-div">
           <table id="projectlist-table">
             <thead>
               <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Details</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>ID</th>
+                <th>PROJECT NAME</th>
+                <th>DETAILS</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
               </tr>
             </thead>
             <tbody>

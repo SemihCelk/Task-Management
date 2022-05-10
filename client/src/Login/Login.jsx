@@ -2,11 +2,12 @@ import React from "react";
 import { useState } from "react";
 import "./login.css";
 
-function Login({ setIsAdmin, setToken,changeName }) {
+function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
   const [username, setName] = useState();
   const [password, setPasword] = useState();
-  const [isLogin, setIsLogin] = useState();
+  const [isLogin, setIsLogin] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
+  const [hata,sethata]=useState("")
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -24,6 +25,10 @@ function Login({ setIsAdmin, setToken,changeName }) {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((res) => {
+        if(res.message==="incorrect entry!"){
+          setIsLogin(true)
+          sethata(res.message)
+        }
         if (typeof res.accessToken === "string") {
           setToken(res.accessToken);
           localStorage.setItem("token", res.accessToken);
@@ -31,8 +36,10 @@ function Login({ setIsAdmin, setToken,changeName }) {
           localStorage.setItem("isAdmin", res.isAdmin);
           changeName(res.username);
           localStorage.setItem("name", res.username);
-        }
-      });
+          setSpecialid(res.userid)
+          localStorage.setItem("id",res.userid)
+        } 
+      })
   };
   return (
     <div className="Mainlogindiv">
@@ -43,7 +50,7 @@ function Login({ setIsAdmin, setToken,changeName }) {
             <input
               type="text"
               placeholder="User Name"
-              name="username"
+              name="username" autoComplete="off"
               onChange={(e) => setName(e.target.value)}
             ></input>
             <label>User Name</label>
@@ -58,12 +65,12 @@ function Login({ setIsAdmin, setToken,changeName }) {
             <label>Password</label>
           </div>
           <div>
-            <input type="checkbox" onClick={togglePassword}></input>
+            <input type="checkbox" className="checkbox" onClick={togglePassword}></input>
             <div id="showwpassword">Show Password</div>
           </div>
           {isLogin && (
-            <div style={{ color: "white" }}>
-              "username or password incorrect!"
+            <div style={{ color: "red" }}>
+              {hata}
             </div>
           )}
           <p onClick={sendLogin}>Submit</p>

@@ -1,57 +1,135 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
+import "./projectuseradd.css"
 
-function Projectuseradd({ setUseradd, userlist, id }) {
+function Projectuseradd({ setUseradd, userlist, id,summary}) {
   const [userid, setUserid] = useState();
+  const [summaryUserfilter, setUserfilter] = useState([]);
+  const [work, setWork] = useState(true);
+  const [hata,setHata]=useState(false)
   const adduser = () => {
+    if(userid!=="Choose One"){
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, userid }),
+      };
+      const url = "http://localhost:5000/api/projects/" + id;
+      fetch(url, requestOptions)
+        .then((res) => res.json())
+        .finally(userfilter)
+        .finally(setHata(false))
+        .catch((err) => console.log(err.data));
+    }
+    else{
+      console.log("hata")
+      setHata(true)
+    }
+  
+  };
+  const userfilter = () => {
     const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, userid }),
+      method: "GET",
+      redirect: "follow",
     };
-    const url = "http://localhost:5000/api/projects/" + id;
-    fetch(url, requestOptions)
-      .then((res) => res.json())
-      .finally(setUseradd(false))
-      .catch((err) => console.log(err.data));
+
+    fetch("http://localhost:5000/api/project/user", requestOptions)
+      .then((response) => response.json())
+      .then((result) => setUserfilter(result))
+      .catch((error) => console.log("error", error));
+  };
+  const deleteuser = (xid) => {
+    const requestOptions = {
+      method: "DELETE",
+    };
+    fetch("http://localhost:5000/api/projects/user/" + xid, requestOptions)
+      .then((response) => response.json())
+      .then(summary)
+      .finally(userfilter)
+      .catch((error) => console.log("error", error));
   };
 
+  if (work) {
+    userfilter();
+    setWork(false);
+  }
+  useEffect(() => {
+    userfilter();
+  }, []);
   return (
     <div className="addprojectbehind">
-      <div className="container addsummary">
+      <div className="project-user-add">
         <div>
-          <span id="spanupdate">Add Summary</span>
-          <i className="fa-solid fa-xmark x-add-summary" onClick={() => {setUseradd(false)}}></i>
+          <span id="spanupdate">Add User</span>
+          <i
+            className="fa-solid fa-xmark x-add-user"
+            onClick={() => {
+              setUseradd(false);
+            }}
+          ></i>
         </div>
-        <hr className="line" />
-        <form>
-          <br></br>
+        <hr className="line add-user-hr" />
+        <form className="bottom">
           <select
-            className="select"
+            className="select select-project-user-add"
             onChange={(e) => {
               setUserid(e.target.value);
             }}
           >
+            <option value="Choose One">Choose One</option>
             {userlist.map((item, i) => {
-              return (
-                <option key={i} value={item.id}>
-                  {item.id} {item.name}
-                </option>
-              );
+              if (item.name !== "admin")
+                return (
+                  <option key={i} value={item.id}>
+                  {item.name}
+                  </option>
+                );
             })}
           </select>
         </form>
         <div>
-          Userlist
-          <hr></hr>
-          <div>
-            <ol>
-              <li></li>
-            </ol>
-          </div>
+          Added Users
+          <hr className="line add-user-hr"></hr>
+          <table className="project-user-add-table">
+            <thead>
+              <tr>
+                <th>id</th>
+                <th>Name</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            {summaryUserfilter.map((item, key) => {
+              return (
+                <tbody key={key}>
+                  {userlist.map((user, i) => {
+                    if (item.projectid === id && item.userid === user.id)
+                      return (
+                        <tr key={i}>
+                          <td>{user.id}</td>
+                          <td>{user.name}</td>
+                          <td>
+                            <i
+                              className="fa-solid fa-trash dustbin"
+                              onClick={() => {
+                                deleteuser(user.id);
+                              }}
+                            ></i>
+                          </td>
+                        </tr>
+                      );
+                  })}
+                </tbody>
+              );
+            })}
+          </table>
+          {hata&&(
+            <div>hatalı giris</div>
+          )}
         </div>
-        <button className="acceptbtn btn-add-summary" onClick={adduser}>Add</button>
+        <button className="acceptbtn btn-add-user" onClick={adduser}>
+          Add
+        </button>
         <button
-          className="acceptbtn btn-add-summary"
+          className="acceptbtn btn-add-user"
           onClick={() => {
             setUseradd(false);
           }}

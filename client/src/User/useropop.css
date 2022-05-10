@@ -1,0 +1,112 @@
+.user-pop-up {
+    position: absolute;
+    height: 40vh;
+    background-color: rgb(53, 53, 85);
+    width: 25%;
+    min-width: 450px;
+    margin-left: 20%;
+    margin-bottom: 5%;
+    border-radius: 5px;
+    margin-top: 16%;
+    padding-bottom: 1%;
+    overflow: auto;
+    min-height: 400px;
+    padding-bottom: 2%;
+}
+
+.user-pop-up::-webkit-scrollbar {
+    display: none;
+}
+
+.top-bar {
+    width: 100%;
+    background-color: rgb(97, 77, 129);
+    height: 50px;
+}
+
+#navbar-text {
+    color: white;
+    margin-left: 4%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    padding-top: 5px;
+}
+
+.logout-btn-user {
+    margin-right: 1%;
+    float: right;
+    display: flex;
+}
+
+.summary-border {
+    border: 1px solid rgb(0, 0, 0);
+    width: 90%;
+    height: auto;
+    padding: 1%;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    overflow-wrap: break-word;
+}
+
+.text-white {
+    color: white;
+}
+.user-x {
+    float: right;
+    color: white;
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.user-pop-up-x {
+    float: right;
+    color: white;
+    margin-top: -29px;
+    margin-right: 9px;
+    font-size: 20px;
+}
+
+.user-right {
+    width: 28%;
+    float: right;
+    margin-top: 2%;
+    padding-left: 3%;
+}
+
+.user-left {
+    width: 63%;
+    margin-left: 4%;
+    margin-bottom: 1%;
+    border-right: 2px solid white;
+}
+
+.Done {
+    color: red;
+}
+
+.Progress {
+    color: orange;
+}
+
+.Open {
+    color: rgb(10, 255, 10);
+}
+
+.background {
+    z-index: 1;
+    width: 152%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    height: 150vh;
+    background-color: rgba(0, 0, 0, 0.658);
+    margin-top: -28%;
+    margin-left: -46%;
+}
+
+.summary-user-header {
+    margin-top: 2.5%;
+    font-size: 25px;
+    margin-right: 20px;
+}

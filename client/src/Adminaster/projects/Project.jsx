@@ -14,6 +14,9 @@ function Project() {
   const [shownewprojectedit, setshowprojectedit] = useState(false);
   const [deleted, setDeleted] = useState(false);
   const [id, setid] = useState();
+  const [loading, setLoading] = useState(true);
+  const [itemLoading, setitemLoading] = useState(true);
+
   const projectData = () => {
     const requestOptions = {
       method: "GET",
@@ -22,6 +25,7 @@ function Project() {
     fetch("http://localhost:5000/api/projects", requestOptions)
       .then((response) => response.json())
       .then((result) => setProjects(result))
+      .finally(setLoading(false))
       .catch((error) => console.log("error", error));
   };
   useEffect(() => {
@@ -48,22 +52,27 @@ function Project() {
       .finally(projectData)
       .catch((error) => console.log("error", error));
   };
-  const summary = (xid) => {
+
+  const summary = () => {
     const requestOptions = {
       method: "GET",
       redirect: "follow",
     };
-    fetch("http://localhost:5000/api/project/summary/" + xid, requestOptions)
+    fetch("http://localhost:5000/api/projects/summary/", requestOptions)
       .then((response) => response.json())
       .then((result) => setDetails(result))
+      .finally(setitemLoading(false))
       .catch((error) => console.log("error", error));
   };
+  useEffect(() => {
+    summary();
+  }, []);
 
   return (
     <div className="project">
       {deleted && (
         <div className="pop-up-top">
-          <div className="pop-up">
+          <div className="pop-up-projectlist">
             <i
               className="fa-solid fa-xmark questionx"
               onClick={() => {
@@ -124,9 +133,11 @@ function Project() {
           summary={summary}
           setProjectlist={setProjectlist}
           userlist={userlist}
+          itemLoading={itemLoading}
 
         />
       )}
+
       {projectlist && (
         <Projectlist
           setFolder={setFolder}
@@ -140,6 +151,7 @@ function Project() {
           setshowprojectedit={setshowprojectedit}
           setDeleted={setDeleted}
           setProjectlist={setProjectlist}
+          loading={loading}
         />
       )}
     </div>

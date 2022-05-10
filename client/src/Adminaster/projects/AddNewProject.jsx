@@ -36,27 +36,42 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
           ></i>
         </div>
         <hr className="line" />
-        <form>
-          <input
-            className="addnewproject-input"
-            placeholder="id"
-            onChange={(e) => setProjectid(e.target.value)}
-            required
-          ></input>
-          <input
-            className="addnewproject-input"
-            placeholder="project name"
-            onChange={(e) => setProjectname(e.target.value)}
-            required
-          ></input>
+        <form style={{marginLeft:"10px"}}>
+        <div className="add-project-group">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="ID"
+                name="id"
+                onChange={(e) => setProjectid(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>ID</label>
+            </div>
+            <div className="add-project-group">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="Project Name"
+                name="id"
+                onChange={(e) => setProjectname(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>Project Name</label>
+            </div>
           <select
             className="select"
             onChange={(e) => {
               setUserid(e.target.value);
             }}
           >
-            <option value={null}>Choose one</option>
+            <option>Choose one</option>
             {userlist.map((item, i) => {
+             if(item.name !=="admin")
               return (
                 <option key={i} value={item.id}>
                   {item.id} {item.name}

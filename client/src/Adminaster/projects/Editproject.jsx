@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 
-function Editproject({ setshowprojectedit, id, projectname, projectData,userlist,loadData}) {
-  const [projectid, setProjectid] = useState(id);
+function Editproject({ setshowprojectedit, id, projectname, projectData,loadData}) {
   const [projectName, setProjectname] = useState(projectname);
-  const [userid,setUserid]=useState()
   const editproject = () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -11,7 +9,7 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
       method: "PUT",
       headers: myHeaders,
       body: JSON.stringify({
-        projectName,userid
+        projectName
       }),
       redirect: "follow",
     };
@@ -27,7 +25,7 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
  
   return (
     <div className="addprojectbehind">
-      <div className="container addproject">
+      <div className="container updateproject">
         <div>
           <span id="spanupdate">Project Edit</span>
           <i
@@ -37,41 +35,26 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
             }}
           ></i>
         </div>
-        <hr className="line" />
+        <hr className="project-edit-hr-line" />
         <form>
-          <input
-            className="addnewproject-input"
-            placeholder="id"
-            value={projectid}
-            onChange={(e) => setProjectid(e.target.value)}
-            required
-          ></input>
-          <input
-            className="addnewproject-input"
-            placeholder="project name"
-            value={projectName}
-            onChange={(e) => setProjectname(e.target.value)}
-            required
-          ></input>
-          <select
-            className="select"
-            onChange={(e) => {
-              setUserid(e.target.value);
-            }}
-          >
-            <option value={null}>Choose one</option>
-            {userlist.map((item, i) => {
-              return (
-                <option key={i} value={item.id}>
-                  {item.id} {item.name}
-                </option>
-              );
-            })}
-          </select>
+        <div className="edit-project">
+              <input
+              autoComplete="off"
+                type="text"
+                placeholder="Project Name"
+                value={projectName}
+                name="name"
+                onChange={(e) => setProjectname(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>Project Name</label>
+            </div>
         </form>
-        <button className="acceptbtn btn-top-projectadd" onClick={editproject}>Add</button>
+        <button className="acceptbtn" onClick={editproject}>Add</button>
         <button
-          className="acceptbtn btn-top-projectadd"
+          className="acceptbtn "
           onClick={() => {
             setshowprojectedit(false);
           }}

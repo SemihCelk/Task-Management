@@ -2,28 +2,26 @@
     width: 100%;
 }
 .project-main-div{
-width: 100%;
 overflow: auto;
+width: auto;
+margin-left: auto;
+display: flex;
+margin-top: 1%;
 }
 .project-table-div{
-    width: auto;
-    margin-left: auto;
-    /* display: flex; */
-    margin-top: 1%;
-    justify-content: center;
-    margin-left: 16%;
+    margin-top: 4%;
+    width: 100%;
+ 
 }
 #projectlist-table{
-    width: 80%;
-    margin-bottom: 10%;
-    border-collapse: collapse;
-    text-align: center;
-    margin-top: 8%;
+    width: 100%;
+   
 }
 
 h2{
-    margin-top: 5%;
-    margin-left: 5%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 2%;
 }
 .open-folder{
     cursor: pointer;
@@ -37,4 +35,70 @@ h2{
 .btn-right{
     margin-right: 4%;
     margin-top: 2%;
+}
+.project-list-btn, .project-list-btn span {
+	transition: 200ms;
+}
+.project-list-btn {
+    position: relative;
+	width: 170px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    background: #a142b6;
+    float: right;
+    margin-right: 2.5%;
+    margin-bottom: 1%;
+}
+
+.project-list-btn .text {
+	transform: translateX(10px);
+	color: white;
+	font-weight: bold;
+}
+
+.project-list-btn .icon {
+	position: absolute;
+	border-left: 1px solid #d1d1d1;
+	transform: translateX(130px);
+	height: 40px;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    }
+
+
+.project-list-btn:hover {
+	background: #a142b6;
+}
+
+.project-list-btn:hover .text {
+	color: transparent;
+}
+
+.project-list-btn:hover .icon {
+	width: 170px;
+	border-left: none;
+	transform: translateX(0);
+}
+
+.project-list-btn:focus {
+	outline: none;
+}
+.pop-up-projectlist{
+	text-align: center;
+    margin-left: 47%;
+    background-color: #21304d;
+    width: 20%;
+    height: auto;
+    position: absolute;
+    justify-content: center;
+    margin-top: 34%;
+    border-radius: 10px;
 }

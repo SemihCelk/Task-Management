@@ -7,9 +7,12 @@ const client = new pg.Client({
   connectionString:
     "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
 });
+pg.types.setTypeParser(1114, function (stringValue) {
+  return stringValue; //1114 for time without timezone type
+});
 client.connect();
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); 
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -19,31 +22,24 @@ app.post("/login", (req, res) => {
       const user = userlist.find((u) => {
         return u.name === username && u.password === password;
       });
-      if (user) {
-        if (user.isAdmin) {
-          const accessToken = jwt.sign(
-            { id: user.id, isAdmin: user.isAdmin },
-            "secretkey"
-          );
-          res.json({
-            username: user.name,
-            isAdmin: user.isAdmin,
-            accessToken,
-          });
-        } else {
-          const accessToken = jwt.sign(
-            { id: user.id, isAdmin: user.isAdmin },
-            "userkey"
-          );
-          res.json({
-            username: user.name,
-            isAdmin: user.isAdmin,
-            accessToken,
-          });
-        }
+      if (!user) {
+        res.json({
+          message:"incorrect entry!"
+        });
+       
+      } else {
+        const accessToken = jwt.sign(
+          { id: user.id, isAdmin: user.isAdmin },
+          "secretkey"
+        );
+        res.json({
+          username: user.name,
+          isAdmin: user.isAdmin,
+          accessToken,
+          userid: user.id,
+          message:"succesfull"
+        });
       }
-    } else {
-      res.status(401).json({ loginError: "username or password incorrect!" });
     }
   });
 });
@@ -115,11 +111,53 @@ app.post("/api/projects", async (req, res, next) => {
     console.log("hata");
     next(error);
   }
-}); //project summary list
-app.get("/api/project/summary/:id/", async (req, res, next) => {
+});
+// //Project summary edit
+app.put("/api/summary/:id/", async (req, res, next) => {
+  console.log(req.params.id);
+  const taskuser = req.body.userid;
+  const summary = req.body.summary;
+  const description = req.body.description;
+  const start = req.body.start;
+  const finish = req.body.finish;
+  const status = req.body.status;
+  const bos = null;
   try {
-    const summarylist = `SELECT * FROM task WHERE projectid=$1`;
-    const summarygetir = await client.query(summarylist, [req.params.id]);
+    console.log(taskuser, summary, description, start, finish, status);
+    const update =
+      "UPDATE task SET taskuser=$1, summary=$2, description=$3, start=$4, finish=$5 , statusid=$6 WHERE id=$7";
+    if (taskuser === "Choose One") {
+      const updater = await client.query(update, [
+        bos,
+        summary,
+        description,
+        start,
+        finish,
+        status,
+        req.params.id,
+      ]);
+      res.json("null");
+    } else {
+      const updater = await client.query(update, [
+        taskuser,
+        summary,
+        description,
+        start,
+        finish,
+        status,
+        req.params.id,
+      ]);
+      res.json("not null");
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+//SummaryList
+app.get("/api/projects/summary/", async (req, res, next) => {
+  try {
+    const summarylist = `SELECT * FROM task ORDER BY id`;
+    const summarygetir = await client.query(summarylist);
     res.json(summarygetir.rows);
   } catch (error) {
     console.log("hata");
@@ -134,19 +172,44 @@ app.post("/api/projects/:id/", async (req, res, next) => {
     const projectuser =
       "insert into projectuser(userid,projectid) values($1,$2) returning*;";
     const userAdd = await client.query(projectuser, [userid, projectid]);
-    res.json(userAdd.rows); 
+    res.json(userAdd.rows);
   } catch (error) {
     console.log("hata");
     next(error);
-  } 
-}); 
+  }
+});
+//Project-user-delete
+app.delete("/api/projects/user/:id/", async (req, res, next) => {
+  try {
+    const deleteduser = "delete from projectuser where userid=$1";
+    const taskdel = "update task set taskuser=null where taskuser=$1";
+    const userdeleter = await client.query(deleteduser, [req.params.id]);
+    const usertaskdel = await client.query(taskdel, [req.params.id]);
+    res.json([userdeleter]);
+    console.log(req.params.id);
+  } catch (error) {
+    next(error);
+  }
+});
+//Proje silme
+app.delete("/api/projects/:id/", async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const deleteprojectuser = "delete from projectuser where projectid= $1";
+    const singledel = `delete from project where id = $1`;
+    const delpuser = await client.query(deleteprojectuser, [req.params.id]);
+    const userdeleter = await client.query(singledel, [req.params.id]);
+    res.json(userdeleter);
+  } catch (error) {
+    next(error);
+  }
+});
 //project user filter
-app.get("/api/project/user",async(req,res,next)=>{
+app.get("/api/project/user", async (req, res, next) => {
   try {
     const list = "SELECT * FROM public.projectuser ORDER BY id";
     const getir = await client.query(list);
     res.json(getir.rows);
-    console.log(getir.rows)
   } catch (error) {
     next(error);
   }
@@ -172,18 +235,7 @@ app.put("/api/projects/:id/", async (req, res, next) => {
     next(error);
   }
 });
-//Proje silme
-app.delete("/api/projects/:id/", async (req, res, next) => {
-  try {
-    const deleteprojectuser = "delete from projectuser where id= $1";
-    const singledel = `delete from project where id = $1`;
-    const delpuser = await client.query(deleteprojectuser, [req.params.id]);
-    const singledeleter = await client.query(singledel, [req.params.id]);
-    res.json(singledeleter);
-  } catch (error) {
-    next(error);
-  }
-});
+
 //EKLEME
 app.post("/api/user", async (req, res, next) => {
   try {
@@ -210,13 +262,14 @@ app.post("/api/user", async (req, res, next) => {
 app.post("/api/project/summary", async (req, res, next) => {
   try {
     const projectid = req.body.id;
-    const taskuser = req.body.data;
+    const taskuser = req.body.userid;
     const summary = req.body.summary;
     const description = req.body.description;
     const start = req.body.start;
     const finish = req.body.finish;
+    const status = req.body.status;
     const sql =
-      "insert into task(projectid,taskuser,summary,description,start,finish) values($1,$2,$3,$4,$5,$6) returning*;";
+      "insert into task(projectid,taskuser,summary,description,start,finish,statusid) values($1,$2,$3,$4,$5,$6,$7) returning*;";
     const response = await client.query(sql, [
       projectid,
       taskuser,
@@ -224,6 +277,7 @@ app.post("/api/project/summary", async (req, res, next) => {
       description,
       start,
       finish,
+      status,
     ]);
     res.json([response.rows]);
   } catch (error) {
@@ -233,9 +287,10 @@ app.post("/api/project/summary", async (req, res, next) => {
 //summary silme
 app.delete("/api/project/summary/:id/", async (req, res, next) => {
   try {
-    const deletesummary = "delete from task where id=$1";
-    const singledeleter = await client.query(deletesummary, [req.params.id]);
-    res.json([singledeleter]);
+    const deleteduser = "delete from task where id=$1";
+    const userdeleter = await client.query(deleteduser, [req.params.id]);
+    res.json([userdeleter]);
+    console.log(req.params.id);
   } catch (error) {
     next(error);
   }
@@ -280,13 +335,15 @@ app.delete("/api/user/:id/", async (req, res, next) => {
   try {
     const deleteprojectuser = "delete from projectuser where id=$1";
     const singledel = `delete from userslist where id = $1`;
-    const singledeleter = await client.query(singledel, [req.params.id]);
+    const userdeleter = await client.query(singledel, [req.params.id]);
     const delpuser = await client.query(deleteprojectuser, [req.params.id]);
-    res.json(singledeleter);
+    res.json(userdeleter);
+    console.log("silimdi.");
   } catch (error) {
     next(error);
   }
 });
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const message = err.message || "Unknown Error";

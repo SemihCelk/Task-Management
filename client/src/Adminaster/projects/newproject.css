@@ -8,11 +8,9 @@
     margin-bottom: 5%;
     border-radius: 10px;
     margin-top: 22%;
-    padding-top: 1%
+    padding-top: 13px
 }
-.select {
-    margin-left: 5px;
-}
+
 select:focus{
     outline: none;
 }
@@ -44,4 +42,51 @@ select:focus{
 .btn-top-projectadd {
     margin-top: 10%;
     margin-right: 5%;
+}
+.updateproject{
+    display: inline-table;
+    position: absolute;
+    height: auto;
+    background-color: rgb(55, 48, 91);
+    width: 11%;
+    margin-left: 9%;
+    border-radius: 10px;
+    margin-top: 22%;
+    padding-top: 0.5%;
+}
+#spanupdate{
+    letter-spacing: 1px;
+    font-family:'Font Awesome 6 Free' ;
+}
+.first-select{
+    width: 110px;
+    margin-left: 13px;
+    margin-bottom: 10px;
+}
+.edit-form{
+    margin-left: 1%;
+}
+.edit-summary-area{
+    width: 99%;
+    resize: none;
+    height: 10vh;
+    border-radius: 5px;
+}
+.edit-input{
+        display: block;
+        margin-bottom: 3%;
+        position: relative;
+}
+.line-bottom{
+    width: 100%;
+    background-color: white;
+    font-weight: bold;
+    margin: 0;
+    margin-bottom: 3%;
+    margin-top: 2%;
+}
+.add-project-group{
+    position: relative;
+    margin-bottom: 7%;
+    margin-top: 9%;
 }

@@ -49,7 +49,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
         <hr className="update-line"></hr>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="update-data">
-            <div className="group">
+            <div className="group-update">
               <input
               autoComplete="off"
                 type="text"
@@ -63,7 +63,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <span className="bar"></span>
               <label>Name</label>
             </div>
-            <div className="group">
+            <div className="group-update">
               <input
               autoComplete="off"
                 type="text"
@@ -77,7 +77,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <span className="bar"></span>
               <label>Surname</label>
             </div>
-            <div className="group">
+            <div className="group-update">
               <input
               autoComplete="off"
                 type="text"
@@ -91,7 +91,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <span className="bar"></span>
               <label>password</label>
             </div>
-            <div className="group">
+            <div className="group-update">
               <input
               autoComplete="off"
                 type="text"
@@ -113,7 +113,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <span className="bar"></span>
               <label>E-mail</label>
             </div>
-            <div style={{ marginTop: "-7%" }}>
+            <div style={{ marginTop: "-5%" }}>
               <span>Admin:</span>
               <select
                 name="ask"

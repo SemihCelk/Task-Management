@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./projectdetails.css";
 import SummaryAdd from "./SummaryAdd";
 import Projectuseradd from "./Projectuseradd";
@@ -65,7 +65,7 @@ function Projectdetails({
       ></i>
       {del && (
         <div className="pop-up-top">
-          <div className="pop-up">
+          <div className="summary-pop-up">
             <i
               className="fa-solid fa-xmark questionx"
               onClick={() => {
@@ -130,7 +130,12 @@ function Projectdetails({
         />
       )}
       {userAdd && (
-        <Projectuseradd setUseradd={setUseradd} userlist={userlist} id={id} />
+        <Projectuseradd
+          setUseradd={setUseradd}
+          userlist={userlist}
+          id={id}
+          summary={summary}
+        />
       )}
       {showEdit && (
         <Editsummary
@@ -147,16 +152,16 @@ function Projectdetails({
       <div className="userlist-table-div">
         <table id="userlist-table">
           <thead>
-          <tr>
+            <tr>
               <th>ID</th>
-              <th>User ID</th>
+              <th>USER ID</th>
               <th>SUMMARY</th>
               <th>DESCRİPTİON</th>
-              <th>Status</th>
+              <th>STATUS</th>
               <th>STARTED</th>
-              <th>FİNİSH</th>
-              <th>Edit</th>
-              <th>Delete</th>
+              <th>FINISH</th>
+              <th>EDIT</th>
+              <th>DELETE</th>
             </tr>
           </thead>
           <tbody>
@@ -165,11 +170,15 @@ function Projectdetails({
               const createdDate = createdAt.toLocaleDateString("tr-TR");
               const finishtime = new Date(item.finish);
               const finished = finishtime.toLocaleDateString("tr-TR");
-              if (item.projectid === id)
+              if (item.projectid === id) {
+                if (item.taskuser === null) {
+                  item.taskuser = "null";
+                }
+                const data = item.taskuser.toString().toUpperCase();
                 return (
                   <tr key={i}>
                     <td>{item.id}</td>
-                    <td>{item.taskuser}</td>
+                    <td>{data}</td>
                     <td id="fill">{item.summary}</td>
                     <td id="fill">{item.description}</td>
                     <td className={item.statusid}>{item.statusid}</td>
@@ -199,6 +208,7 @@ function Projectdetails({
                     </td>
                   </tr>
                 );
+              }
             })}
           </tbody>
         </table>

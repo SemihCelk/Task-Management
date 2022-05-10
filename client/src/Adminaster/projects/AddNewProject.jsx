@@ -36,8 +36,8 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
           ></i>
         </div>
         <hr className="line" />
-        <form>
-        <div className="group">
+        <form style={{marginLeft:"10px"}}>
+        <div className="add-project-group">
               <input
               autoComplete="off"
                 type="text"
@@ -50,18 +50,18 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
               <span className="bar"></span>
               <label>ID</label>
             </div>
-            <div className="group">
+            <div className="add-project-group">
               <input
               autoComplete="off"
                 type="text"
-                placeholder="project name"
+                placeholder="Project Name"
                 name="id"
                 onChange={(e) => setProjectname(e.target.value)}
                 required
               ></input>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>project name</label>
+              <label>Project Name</label>
             </div>
           <select
             className="select"
@@ -69,9 +69,9 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
               setUserid(e.target.value);
             }}
           >
-            <option value={null}>Choose one</option>
+            <option>Choose one</option>
             {userlist.map((item, i) => {
-              console.log(item.id)
+             if(item.name !=="admin")
               return (
                 <option key={i} value={item.id}>
                   {item.id} {item.name}

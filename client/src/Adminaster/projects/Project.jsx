@@ -72,7 +72,7 @@ function Project() {
     <div className="project">
       {deleted && (
         <div className="pop-up-top">
-          <div className="pop-up">
+          <div className="pop-up-projectlist">
             <i
               className="fa-solid fa-xmark questionx"
               onClick={() => {

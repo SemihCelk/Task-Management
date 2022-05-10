@@ -91,3 +91,14 @@ h2{
 .project-list-btn:focus {
 	outline: none;
 }
+.pop-up-projectlist{
+	text-align: center;
+    margin-left: 47%;
+    background-color: #21304d;
+    width: 20%;
+    height: auto;
+    position: absolute;
+    justify-content: center;
+    margin-top: 34%;
+    border-radius: 10px;
+}

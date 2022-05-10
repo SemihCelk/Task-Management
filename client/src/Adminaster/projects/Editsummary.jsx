@@ -15,7 +15,11 @@ function Editsummary({
   const [status, setStatus] = useState(data.statusid);
   const [start, setStart] = useState(tarih[0]);
   const [finish, setFinish] = useState(tarih[1]);
+
   const editSummary = () => {
+    if(userid==="null"){
+      setUserid()
+    }
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     const requestOptions = {
@@ -54,11 +58,11 @@ function Editsummary({
         </div>
         <hr className="line line-bottom" />
         <form className="edit-form">
-          <div className="group">
+          <div className="summary-edit">
             <input
               autoComplete="off"
               type="text"
-              placeholder="summary"
+              placeholder="Summary"
               value={summary}
               name="summary"
               onChange={(e) => setSummary(e.target.value)}
@@ -68,7 +72,8 @@ function Editsummary({
             <span className="bar"></span>
             <label>Summary</label>
           </div>
-          <div className="textarea-div">
+          <div className="textarea-summary-div">
+            <div style={{marginLeft:"5px"}}>Description</div>
             <textarea
               className=" edit-summary-area"
               cols="39"
@@ -77,7 +82,7 @@ function Editsummary({
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
-          <div className="group">
+          <div className="summary-edit">
             <input
               autoComplete="off"
               type="text"
@@ -91,7 +96,7 @@ function Editsummary({
             <span className="bar"></span>
             <label>Started Time</label>
           </div>
-          <div className="group">
+          <div className="summary-edit">
             <input
               autoComplete="off"
               type="text"
@@ -130,7 +135,7 @@ function Editsummary({
                 setUserid(e.target.value);
               }}
             >
-              <option value={7}>Choose One</option>
+              <option>Choose One</option>
               {summaryUserfilter.map((item, i) => {
                 if (item.projectid === id) {
                   if (item.userid !== null)

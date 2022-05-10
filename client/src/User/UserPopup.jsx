@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./useropop.css";
-function UserPopup({data, setPop}) {
+function UserPopup({ data, setPop }) {
   const createdAt = new Date(data.start);
   const createdDate = createdAt.toLocaleDateString("tr-TR");
   const finishtime = new Date(data.finish);
@@ -8,10 +8,10 @@ function UserPopup({data, setPop}) {
   const [color, setColor] = useState("");
   const [work, setWork] = useState(true);
   if (work) {
-    console.log("çalıştı")
+    console.log("çalıştı");
     if (data.statusid === "Open") setColor("Open");
     else if (data.statusid === "Progress") setColor("Progress");
-    else{
+    else {
       setColor("Done");
     }
     setWork(false);
@@ -21,7 +21,7 @@ function UserPopup({data, setPop}) {
     <div className="background">
       <div className="container user-pop-up">
         <i
-          className="fa-solid fa-xmark user-pop-up-x"
+          className="fa-solid fa-xmark user-x"
           onClick={() => {
             setPop(false);
           }}
@@ -41,14 +41,15 @@ function UserPopup({data, setPop}) {
             <span className={color}> {data.statusid}</span>
           </div>
         </div>
-        <div className="text-white user-left">
-          <div className="">
-            Summary:
-            <div className="summary-border">{data.summary}</div>
-          </div>
-          <div>
-            Description:
-            <div className="summary-border">{data.description}</div>
+        <div className="border-right-line">
+          <div className="text-white user-left">
+            <div className="">
+              <div className="summary-user-header">{data.summary}</div>
+            </div>
+            <div>
+              Description:
+              <div className="summary-border">{data.description}</div>
+            </div>
           </div>
         </div>
       </div>

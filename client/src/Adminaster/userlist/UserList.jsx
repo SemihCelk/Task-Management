@@ -124,7 +124,7 @@ function UserList() {
                     <td>{user.name}</td>
                     <td>{user.surname}</td>
                     <td>{user.mail}</td>
-                    <td>{user.password}</td>
+                    <td className="hidetext">{user.password}</td>
                     <td>{String(user.isAdmin)}</td>
                     <td>
                       <i

@@ -24,3 +24,14 @@ cursor: pointer;
 table tr td{
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+.summary-pop-up{
+    text-align: center;
+    margin-left: 47%;
+    background-color: #21304d;
+    width: 20%;
+    height: auto;
+    position: absolute;
+    justify-content: center;
+    margin-top: 34%;
+    border-radius: 10px;
+}

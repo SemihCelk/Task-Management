@@ -8,23 +8,23 @@ function AddnewUser({ loadData, setShowAddComp }) {
   const [mail, setMail] = useState("");
   const [isAdmin, setIsAdmin] = useState("false");
   const [throwError, setThrowError] = useState(false);
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register} = useForm("");
   const onSubmit = () => {
-    if(isAdmin ==="null"){
-      console.log(isAdmin,)
-      setIsAdmin(false)
+    if (isAdmin === "null") {
+      console.log(isAdmin);
+      setIsAdmin(false);
     }
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, surname, password, mail,isAdmin }),
+      body: JSON.stringify({ name, surname, password, mail, isAdmin }),
     };
     const url = "http://localhost:5000/api/user";
     fetch(url, requestOptions)
       .then((res) => res.json())
       .finally(() => {
         loadData();
-        setShowAddComp(false)
+        setShowAddComp(false);
       })
       .catch((err) => console.log(err.data));
   };
@@ -43,9 +43,9 @@ function AddnewUser({ loadData, setShowAddComp }) {
         <hr className="line" />
         <form className="form" onSubmit={handleSubmit(onSubmit)}>
           <div className="update-data">
-            <div className="group">
+            <div className="add-user-group">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
                 placeholder="Name*"
                 name="name"
@@ -56,9 +56,9 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <span className="bar"></span>
               <label>Name*</label>
             </div>
-            <div className="group">
+            <div className="add-user-group">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
                 placeholder="Surname*"
                 name="surname"
@@ -69,9 +69,9 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <span className="bar"></span>
               <label>Surname*</label>
             </div>
-            <div className="group">
+            <div className="add-user-group">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
                 placeholder="Password*"
                 name="password"
@@ -82,9 +82,9 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <span className="bar"></span>
               <label>Password*</label>
             </div>
-            <div className="group">
+            <div className="add-user-group">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
                 placeholder="E-mail*"
                 name="email"
@@ -100,8 +100,8 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <span className="highlight"></span>
               <span className="bar"></span>
               <label>E-mail*</label>
-            </div>{" "}
-            <div style={{ marginTop: "-4%" }}>
+            </div>
+            <div>
               <span>Admin:</span>
               <select
                 name="ask"
@@ -116,7 +116,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
               </select>
             </div>
             <br></br>
-            <button className="acceptbtn" >Add</button>
+            <button className="acceptbtn">Add</button>
             <button
               className="acceptbtn"
               onClick={() => {

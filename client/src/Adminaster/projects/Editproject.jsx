@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Editproject({ setshowprojectedit, id, projectname, projectData,userlist,loadData}) {
+function Editproject({ setshowprojectedit, id, projectname, projectData,loadData}) {
   const [projectName, setProjectname] = useState(projectname);
   const editproject = () => {
     const myHeaders = new Headers();
@@ -37,11 +37,11 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
         </div>
         <hr className="project-edit-hr-line" />
         <form>
-        <div className="group">
+        <div className="edit-project">
               <input
               autoComplete="off"
                 type="text"
-                placeholder="project name"
+                placeholder="Project Name"
                 value={projectName}
                 name="name"
                 onChange={(e) => setProjectname(e.target.value)}
@@ -49,12 +49,12 @@ function Editproject({ setshowprojectedit, id, projectname, projectData,userlist
               ></input>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>project name</label>
+              <label>Project Name</label>
             </div>
         </form>
-        <button className="acceptbtn project-edit-btn" onClick={editproject}>Add</button>
+        <button className="acceptbtn" onClick={editproject}>Add</button>
         <button
-          className="acceptbtn project-edit-btn"
+          className="acceptbtn "
           onClick={() => {
             setshowprojectedit(false);
           }}

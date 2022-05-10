@@ -38,7 +38,13 @@
 .textarea-div {
     margin-bottom: 1%;
     display: block;
-    margin-top: -3%
+    margin-top:-2%;
+    margin-bottom: -2%;
+}
+.textarea-summary-div {
+    display: block;
+    margin-top:-2%;
+    margin-bottom: -2%;
 }
 
 .x-add-summary {
@@ -83,4 +89,22 @@
 .btn-add-user {
     margin-top: 3%;
     margin-right: 2%;
+}
+.sub-choose{
+    margin-bottom: 5%;
+    margin-top: -1%;
+
+}
+.sub-choose-span{
+    margin-right: 2%;
+}
+.edit-project{
+    position: relative;
+    margin-bottom: 12%;
+    margin-top: 9%;
+}
+.add-summary-group{
+    position: relative;
+    margin-bottom: 6%;
+    margin-top: 7%;
 }

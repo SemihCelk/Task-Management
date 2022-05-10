@@ -114,13 +114,13 @@ table {
 }
 .pop-up{
     text-align: center;
-    margin-left: 42%;
+    margin-left: 47%;
     background-color: #21304d;
-    width: 28%;
+    width: 20%;
     height: auto;
     position: absolute;
     justify-content: center;
-    margin-top: 30%;
+    margin-top: 29%;
     border-radius: 10px;
 
     
@@ -134,3 +134,4 @@ table {
     position: fixed;
     margin-left: -50%;
 }
+.hidetext { -webkit-text-security: disc; }

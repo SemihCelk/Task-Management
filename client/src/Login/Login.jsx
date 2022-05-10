@@ -5,8 +5,9 @@ import "./login.css";
 function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
   const [username, setName] = useState();
   const [password, setPasword] = useState();
-  const [isLogin, setIsLogin] = useState();
+  const [isLogin, setIsLogin] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
+  const [hata,sethata]=useState("")
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
   };
@@ -24,6 +25,10 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((res) => {
+        if(res.message==="incorrect entry!"){
+          setIsLogin(true)
+          sethata(res.message)
+        }
         if (typeof res.accessToken === "string") {
           setToken(res.accessToken);
           localStorage.setItem("token", res.accessToken);
@@ -33,8 +38,8 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
           localStorage.setItem("name", res.username);
           setSpecialid(res.userid)
           localStorage.setItem("id",res.userid)
-        }
-      });
+        } 
+      })
   };
   return (
     <div className="Mainlogindiv">
@@ -64,8 +69,8 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
             <div id="showwpassword">Show Password</div>
           </div>
           {isLogin && (
-            <div style={{ color: "white" }}>
-              "username or password incorrect!"
+            <div style={{ color: "red" }}>
+              {hata}
             </div>
           )}
           <p onClick={sendLogin}>Submit</p>

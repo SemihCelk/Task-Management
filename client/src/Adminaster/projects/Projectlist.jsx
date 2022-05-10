@@ -37,11 +37,11 @@ function Projectlist({
           <table id="projectlist-table">
             <thead>
               <tr>
-                <th>id</th>
-                <th>Name</th>
-                <th>Details</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>ID</th>
+                <th>PROJECT NAME</th>
+                <th>DETAILS</th>
+                <th>EDIT</th>
+                <th>DELETE</th>
               </tr>
             </thead>
             <tbody>

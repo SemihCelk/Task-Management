@@ -10,9 +10,6 @@ function Userpagedetails({
 }) {
   const [data, setData] = useState();
   const [pop, setPop] = useState(false);
-  const [work, setWork] = useState(true);
-  const [color, setColor] = useState("");
-
   console.log(projectid);
   console.log(details);
   if (userid.userid)
@@ -25,6 +22,7 @@ function Userpagedetails({
             setShow(true);
           }}
         ></i>
+
         <h2 id="h2">SummaryList</h2>
         {pop && <UserPopup data={data} setPop={setPop} />}
         <div className="project-table">
@@ -43,7 +41,6 @@ function Userpagedetails({
                   userid.userid === item.taskuser &&
                   projectid.id === item.projectid
                 ) {
-                  console.log(item.statusid);
                   return (
                     <tr key={i}>
                       <td id="fill">{item.summary}</td>

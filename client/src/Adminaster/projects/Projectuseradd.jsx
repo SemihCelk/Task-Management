@@ -85,7 +85,11 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
                 );
             })}
           </select>
+
         </form>
+        {hata&&(
+            <div id="invalid-user">Invalid user</div>
+          )}
         <div>
           Added Users
           <hr className="line add-user-hr"></hr>
@@ -121,9 +125,6 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
               );
             })}
           </table>
-          {hata&&(
-            <div>hatalı giris</div>
-          )}
         </div>
         <button className="acceptbtn btn-add-user" onClick={adduser}>
           Add

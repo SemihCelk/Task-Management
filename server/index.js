@@ -7,12 +7,10 @@ const client = new pg.Client({
   connectionString:
     "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
 });
-pg.types.setTypeParser(1114, function (stringValue) {
-  return stringValue; //1114 for time without timezone type
-});
+
 client.connect();
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -24,9 +22,8 @@ app.post("/login", (req, res) => {
       });
       if (!user) {
         res.json({
-          message:"incorrect entry!"
+          message: "incorrect entry!",
         });
-       
       } else {
         const accessToken = jwt.sign(
           { id: user.id, isAdmin: user.isAdmin },
@@ -37,7 +34,7 @@ app.post("/login", (req, res) => {
           isAdmin: user.isAdmin,
           accessToken,
           userid: user.id,
-          message:"succesfull"
+          message: "succesfull",
         });
       }
     }
@@ -165,20 +162,29 @@ app.get("/api/projects/summary/", async (req, res, next) => {
   }
 });
 //Project user add
-app.post("/api/projects/:id/", async (req, res, next) => {
-  try {
-    const userid = req.body.userid;
-    const projectid = req.body.id;
-    const projectuser =
-      "insert into projectuser(userid,projectid) values($1,$2) returning*;";
-    const userAdd = await client.query(projectuser, [userid, projectid]);
-    res.json(userAdd.rows);
-  } catch (error) {
-    console.log("hata");
-    next(error);
-  }
+app.post("/api/projects/:id/", (req, res) => {
+  const userid = req.body.userid;
+  const projectid = req.body.id;
+  console.log(userid, projectid);
+  client.query(
+    `select userid,projectid from projectuser where userid=${userid} AND projectid=${projectid}`,
+    (err, result) => {
+      let response = result.rows;
+      if (response.length > 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Same user and project already extist!",
+          stack: err,
+        });
+      }
+      const projectuser =
+        "insert into projectuser(userid,projectid) values($1,$2) returning*;";
+      const userAdd = client.query(projectuser, [userid, projectid]);
+      res.json(userAdd.rows);
+    }
+  );
 });
-//Project-user-delete
+// Project-user-delete
 app.delete("/api/projects/user/:id/", async (req, res, next) => {
   try {
     const deleteduser = "delete from projectuser where userid=$1";

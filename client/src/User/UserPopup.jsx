@@ -7,16 +7,21 @@ function UserPopup({ data, setPop }) {
   const finished = finishtime.toLocaleDateString("tr-TR");
   const [color, setColor] = useState("");
   const [work, setWork] = useState(true);
+  const [x, setX] = useState("");
   if (work) {
     console.log("çalıştı");
-    if (data.statusid === "Open") setColor("Open");
-    else if (data.statusid === "Progress") setColor("Progress");
-    else {
+    if (data.statusid === "Open") {
+      setX("Open");
+      setColor("Open");
+    } else if (data.statusid === "Inprogress") {
+      setX(" In Progress");
+      setColor("Inprogress");
+    } else {
       setColor("Done");
+      setX(" Done");
     }
     setWork(false);
   }
-  console.log(color);
   return (
     <div className="background">
       <div className="container user-pop-up">
@@ -38,7 +43,7 @@ function UserPopup({ data, setPop }) {
           </div>
           <div>
             Status:
-            <span className={color}> {data.statusid}</span>
+            <span className={color}>{x}</span>
           </div>
         </div>
         <div className="border-right-line">
@@ -46,7 +51,7 @@ function UserPopup({ data, setPop }) {
             <div className="">
               <div className="summary-user-header">{data.summary}</div>
             </div>
-            <div>
+            <div style={{ marginBottom: "2%" }}>
               Description:
               <div className="summary-border">{data.description}</div>
             </div>

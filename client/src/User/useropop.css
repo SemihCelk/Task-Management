@@ -4,10 +4,10 @@
     background-color: rgb(53, 53, 85);
     width: 25%;
     min-width: 450px;
-    margin-left: 20%;
+    margin-left: 23%;
     margin-bottom: 5%;
     border-radius: 5px;
-    margin-top: 16%;
+    margin-top: 19%;
     padding-bottom: 1%;
     overflow: auto;
     min-height: 400px;
@@ -20,7 +20,7 @@
 
 .top-bar {
     width: 100%;
-    background-color: rgb(97, 77, 129);
+    background-color: rgb(40, 24, 54);
     height: 50px;
 }
 
@@ -43,6 +43,7 @@
     width: 90%;
     height: auto;
     padding: 1%;
+    margin-top: 1%;
     border-radius: 5px;
     background-color: white;
     color: black;
@@ -62,7 +63,7 @@
 .user-pop-up-x {
     float: right;
     color: white;
-    margin-top: -29px;
+    margin-top: -1.5%;
     margin-right: 9px;
     font-size: 20px;
 }
@@ -85,7 +86,7 @@
     color: red;
 }
 
-.Progress {
+.Inprogress {
     color: orange;
 }
 

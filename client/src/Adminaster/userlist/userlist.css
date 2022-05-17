@@ -135,3 +135,15 @@ table {
     margin-left: -50%;
 }
 .hidetext { -webkit-text-security: disc; }
+#userid-padding-left{
+padding-left: 3%;
+}
+#name-padding-left{
+    padding-left: 5%;
+}
+#surname-padding-left{
+    padding-left: 2%;
+}
+#mail-padding-left{
+    width: 20%;
+}

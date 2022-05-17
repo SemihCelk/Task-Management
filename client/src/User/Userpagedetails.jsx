@@ -23,7 +23,7 @@ function Userpagedetails({
           }}
         ></i>
 
-        <h2 id="h2">SummaryList</h2>
+        <h2 id="h2">Summarylist</h2>
         {pop && <UserPopup data={data} setPop={setPop} />}
         <div className="project-table">
           <table style={{ color: "white" }}>
@@ -32,7 +32,7 @@ function Userpagedetails({
                 <th>Summary</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>details</th>
+                <th>Details</th>
               </tr>
             </thead>
             <tbody>
@@ -40,12 +40,19 @@ function Userpagedetails({
                 if (
                   userid.userid === item.taskuser &&
                   projectid.id === item.projectid
-                ) {
+                ) 
+                var x = "";
+                if(item.statusid ==="Inprogress"){
+                   x = "In Progress"
+                }else{
+                  x = item.statusid
+                } 
+                { 
                   return (
                     <tr key={i}>
                       <td id="fill">{item.summary}</td>
                       <td id="fill">{item.description}</td>
-                      <td className={item.statusid}>{item.statusid}</td>
+                      <td className={item.statusid}>{x}</td>
                       <td>
                         <i
                           className="fa-solid fa-folder-open open-folder"

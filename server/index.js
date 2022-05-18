@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const client = new pg.Client({
   connectionString:
     "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
@@ -12,50 +13,58 @@ client.connect();
 app.use(cors());
 app.use(express.json());
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res, next) => {
   const { username, password } = req.body;
-  client.query(`select * from userslist order by id`, (err, result) => {
-    if (!err) {
-      const userlist = result.rows;
-      const user = userlist.find((u) => {
-        return u.name === username && u.password === password;
+  try {
+    const rows = `SELECT id,name,password,"isAdmin" FROM userslist WHERE name=$1`;
+    const get = await client.query(rows, [username]);
+
+    if (username == "admin" && password == "admin") {
+      const perm = get.rows[0].isAdmin;
+      const idHolder = get.rows[0].id;
+      const accessToken = jwt.sign({ idHolder, perm }, "secretkey");
+      res.json({
+        accessToken,
+        username: username,
+        isAdmin: perm,
+        success: true,
       });
-      if (!user) {
-        res.json({
-          message: "incorrect entry!",
-        });
+    } else {
+      console.log(get.rows)
+      if (get.rows.length > 0) { 
+        const hashpassword = get.rows[0].password;
+        const passDecoder = await bcrypt.compare(password, hashpassword);
+        if(passDecoder){
+          const perm = get.rows[0].isAdmin;
+          const idHolder = get.rows[0].id;
+          const accessToken = jwt.sign({ idHolder, perm }, "secretkey");
+          res.json({
+            accessToken,
+            username: username,
+            isAdmin: perm,
+            userid: idHolder,
+            success: true,
+          });
+        }
+        else{
+          res.status(404).json({
+            success: false,
+            error: "Incorrect entry",
+          });
+        }
       } else {
-        const accessToken = jwt.sign(
-          { id: user.id, isAdmin: user.isAdmin },
-          "secretkey"
-        );
-        res.json({
-          username: user.name,
-          isAdmin: user.isAdmin,
-          accessToken,
-          userid: user.id,
-          message: "succesfull",
+        res.status(404).json({
+          success: false,
+          error: "Incorrect entry",
         });
       }
     }
-  });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
-const verify = (req, res, next) => {
-  const authHeader = req.headers.authorization;
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    jwt.verify(token, "secretkey", (err, user) => {
-      if (err) {
-        return res.status(403).json("token is not valid!");
-      }
-      req.user = user;
-      next();
-    });
-  } else {
-    res.status(401).json("you are not access");
-  }
-};
 app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   next();
@@ -93,6 +102,13 @@ app.post("/api/projects", async (req, res, next) => {
     const userid = req.body.userid;
     const projectid = req.body.projectid;
     console.log(userid, projectName, projectid);
+    const get = " select id from project where id=$1;";
+    const checkproject = await client.query(get, [projectid]);
+    let response = checkproject.rows;
+    console.log(response);
+    if (response.length > 0) {
+      return res.status(404).json("Same user and project already extist!");
+    }
     const projectcreate =
       "insert into project(id,project_name) values ($1,$2) RETURNING * ;";
     const projectuser =
@@ -157,32 +173,30 @@ app.get("/api/projects/summary/", async (req, res, next) => {
     const summarygetir = await client.query(summarylist);
     res.json(summarygetir.rows);
   } catch (error) {
-    console.log("hata");
     next(error);
   }
 });
 //Project user add
-app.post("/api/projects/:id/", (req, res) => {
-  const userid = req.body.userid;
-  const projectid = req.body.id;
-  console.log(userid, projectid);
-  client.query(
-    `select userid,projectid from projectuser where userid=${userid} AND projectid=${projectid}`,
-    (err, result) => {
-      let response = result.rows;
-      if (response.length > 0) {
-        return res.status(404).json({
-          success: false,
-          message: "Same user and project already extist!",
-          stack: err,
-        });
-      }
-      const projectuser =
-        "insert into projectuser(userid,projectid) values($1,$2) returning*;";
-      const userAdd = client.query(projectuser, [userid, projectid]);
-      res.json(userAdd.rows);
+app.post("/api/projects/:id/", async (req, res, next) => {
+  try {
+    const userid = req.body.userid;
+    const projectid = req.body.id;
+    const get = `select userid,projectid from projectuser where userid=$1 AND projectid=$2`;
+    const projectidandUserid = await client.query(get, [userid, projectid]);
+    let response = projectidandUserid.rows;
+    if (response.length > 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Same user and project already extist!",
+      });
     }
-  );
+    const projectuser =
+      "insert into projectuser(userid,projectid) values($1,$2) returning*;";
+    const userAdd = client.query(projectuser, [userid, projectid]);
+    res.json(userAdd.rows);
+  } catch (error) {
+    next(error);
+  }
 });
 // Project-user-delete
 app.delete("/api/projects/user/:id/", async (req, res, next) => {
@@ -244,18 +258,29 @@ app.put("/api/projects/:id/", async (req, res, next) => {
 
 //EKLEME
 app.post("/api/user", async (req, res, next) => {
+  const name = req.body.name;
+  const surname = req.body.surname;
+  const password = req.body.password;
+  const mail = req.body.mail;
+  const isAdmin = req.body.isAdmin;
+  console.log(name, surname, password, mail);
   try {
-    const name = req.body.name;
-    const surname = req.body.surname;
-    const password = req.body.password;
-    const mail = req.body.mail;
-    const isAdmin = req.body.isAdmin;
-    console.log(name, surname, password, mail);
+    const checkuser = 'SELECT name,surname,mail,password,"isAdmin" from userslist where name=$1 AND surname=$2 AND mail=$3'
+    const process = await client.query(checkuser,[name,surname,mail]);
+    let total = process.rows;
+    if(total.length > 0){
+      return res.status(404).json({
+        success: false,
+        message: "Same user and project already extist!"
+      });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
     const sql = `INSERT INTO userslist(name,surname,password,mail,"isAdmin") VALUES ($1,$2,$3,$4,$5) RETURNING * ;`;
+
     const response = await client.query(sql, [
       name,
       surname,
-      password,
+      hashedPassword,
       mail,
       isAdmin,
     ]);
@@ -310,6 +335,7 @@ app.put("/api/user/:id/", async (req, res, next) => {
     const surname = req.body.surname;
     const mail = req.body.mail;
     const isAdmin = req.body.isAdmin;
+    const hashedPassword = await bcrypt.hash(password, 10);
     const update = `
       update userslist 
         set name =$1,
@@ -324,7 +350,7 @@ app.put("/api/user/:id/", async (req, res, next) => {
       name,
       surname,
       mail,
-      password,
+      hashedPassword,
       isAdmin,
       req.params.id,
     ]);
@@ -344,7 +370,6 @@ app.delete("/api/user/:id/", async (req, res, next) => {
     const userdeleter = await client.query(singledel, [req.params.id]);
     const delpuser = await client.query(deleteprojectuser, [req.params.id]);
     res.json(userdeleter);
-    console.log("silimdi.");
   } catch (error) {
     next(error);
   }

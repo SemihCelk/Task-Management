@@ -9,7 +9,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
   const [isAdmin, setIsAdmin] = useState("false");
   const [throwError, setThrowError] = useState(false);
   const [passwordErr, setPasswordErr] = useState(false);
-
+  const [addErr,setAdderr]=useState()
   const {
     register,
     formState: { errors },
@@ -40,14 +40,22 @@ function AddnewUser({ loadData, setShowAddComp }) {
       };
       const url = "http://localhost:5000/api/user";
       fetch(url, requestOptions)
-        .then((res) => res.json())
+      .then((response) => response.json())
+        .then((res)=>{
+          if(res.success===false){
+            setAdderr(res.message)
+          }
+          else{
+            setShowAddComp(false);
+          }
+        })
         .finally(() => {
           loadData();
-          setShowAddComp(false);
         })
         .catch((err) => console.log(err.data));
     }
   };
+  console.log(addErr)
   return (
     <div className="behind">
       <div className="container left">
@@ -103,7 +111,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
               <label>Password*</label>
               {
                 passwordErr&&(
-                  <div id="red">You have to use Minimum 8 character</div>
+                  <div id="red">You have to use minimum 8 character</div>
                 )
               }
             </div>
@@ -141,13 +149,14 @@ function AddnewUser({ loadData, setShowAddComp }) {
                 <option value="true">true</option>
               </select>
             </div>
+          <div style={{ color: "red" }}>{addErr}</div>
             <br></br>
             <button className="acceptbtn">Add</button>
             <button
-              className="acceptbtn"
-              onClick={() => {
-                setShowAddComp(false);
-              }}
+             className="acceptbtn"
+             onClick={()=>{
+               setShowAddComp(false)
+             }}
             >
               Cancel
             </button>

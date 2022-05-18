@@ -107,7 +107,7 @@ function Projectdetails({
           setUseradd(true);
         }}
       >
-        <span className="text">Add User</span>
+        <span className="add-user-button">Add User</span>
         <span className="icon">+</span>
       </button>
       <button

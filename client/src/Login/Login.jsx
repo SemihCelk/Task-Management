@@ -25,9 +25,9 @@ function Login({ setIsAdmin, setToken,changeName,setSpecialid }) {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        if(res.message==="incorrect entry!"){
+        if(res.success===false){
           setIsLogin(true)
-          sethata(res.message)
+          sethata(res.error)
         }
         if (typeof res.accessToken === "string") {
           setToken(res.accessToken);

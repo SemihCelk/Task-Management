@@ -109,7 +109,6 @@ function UserList() {
               <th id="name-padding-left">Username</th>
               <th id="surname-padding-left">Name</th>
               <th>Mail</th>
-              <th>Password</th>
               <th>isAdmin</th>
               <th>Edit</th>
               <th>Delete</th>
@@ -124,7 +123,7 @@ function UserList() {
                     <td id="name-padding-left">{user.name}</td>
                     <td id="surname-padding-left">{user.surname}</td>
                     <td id="mail-padding-left">{user.mail}</td>
-                    <td className="hidetext">{user.password}</td>
+                    {/* <td className="hidetext">{user.password}</td> */}
                     <td>{String(user.isAdmin)}</td>
                     <td>
                       <i

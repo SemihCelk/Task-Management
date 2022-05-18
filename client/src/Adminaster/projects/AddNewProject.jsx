@@ -5,6 +5,7 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
   const [projectName, setProjectname] = useState();
   const [userid, setUserid] = useState();
   const [hata, setHata] = useState(false);
+  const [sameIdErr, setSameIdErr] = useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
     if (
@@ -12,10 +13,9 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
       projectid === null ||
       projectName === null ||
       projectName.startsWith(" ") ||
-      projectName.endsWith(" ")||
+      projectName.endsWith(" ") ||
       projectid.startsWith(" ") ||
-      projectid.endsWith(" ")||
-      projectid !==Number
+      projectid.endsWith(" ")
     ) {
       setHata(true);
     } else {
@@ -29,11 +29,17 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
 
       const url = "http://localhost:5000/api/projects";
       fetch(url, requestOptions)
-        .then((res) => res.json())
+        .then((res) => {
+          if (res.status === 404) {
+            setSameIdErr(true);
+
+          } else {
+            setshowproject(false)
+          }
+        })
         .then(() => {
           projectData();
         })
-        .finally(setshowproject(false))
         .catch((err) => setHata(true));
     }
   };
@@ -64,6 +70,11 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
             <span className="highlight"></span>
             <span className="bar"></span>
             <label>ID</label>
+            {
+              sameIdErr&&(
+                <div id="add-summary-err">Same ıd already extist!</div>
+              )
+            }
           </div>
           <div className="add-project-group">
             <input

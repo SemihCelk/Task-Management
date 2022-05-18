@@ -9,25 +9,36 @@ h3{
     margin-left: auto;
     display: flex;
     margin-top: 1%;
+    height: 65vh;
+    overflow-y: auto; 
 }
-
+.userlist-table-div::-webkit-scrollbar {
+    display: none;
+}
 #userlist-table{
     width: 100%;
     margin-bottom: 10%;
+    height: 5vh;
 }
+
 table {
     border-collapse: collapse;
     text-align: center;
-
   }
   tr td {
     border-bottom: 1px solid rgba(255, 255, 255, 0.501);
     padding: 1%;
+    height: 20px
 
   }
   tr th{
     padding: 1%;
     background-color: rgb(40, 24, 54);
+  }
+ tbody tr:hover{
+      background-color: rgb(255, 255, 255);
+      color: black;
+      transition: 0.5s;
   }
 .delBTN, .delBTN span {
 	transition: 200ms;
@@ -114,7 +125,7 @@ table {
 }
 .pop-up{
     text-align: center;
-    margin-left: 47%;
+    margin-left: 57%;
     background-color: #21304d;
     width: 20%;
     height: auto;

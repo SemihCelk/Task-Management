@@ -35,15 +35,15 @@ function UserPopup({ data, setPop }) {
         <div className="text-white user-right">
           <div className="">
             Started Time:
-            {createdDate}
+            <span> {createdDate}</span>
           </div>
           <div className="">
             Finish Time:
-            {finished}
+            <span> {finished}</span>
           </div>
           <div>
-            Status:
-            <span className={color}>{x}</span>
+            Status:  
+            <span className={color}> {x}</span>
           </div>
         </div>
         <div className="border-right-line">
@@ -52,7 +52,7 @@ function UserPopup({ data, setPop }) {
               <div className="summary-user-header">{data.summary}</div>
             </div>
             <div style={{ marginBottom: "2%" }}>
-              Description:
+              Description: 
               <div className="summary-border">{data.description}</div>
             </div>
           </div>

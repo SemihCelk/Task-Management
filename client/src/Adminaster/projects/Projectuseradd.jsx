@@ -6,6 +6,7 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
   const [summaryUserfilter, setUserfilter] = useState([]);
   const [work, setWork] = useState(true);
   const [hata,setHata]=useState(false)
+  const [addUserErr,setErr]=useState(false)
   const adduser = () => {
     if(userid!=="Choose One"){
       const requestOptions = {
@@ -13,12 +14,21 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, userid }),
       };
+      const close =()=>{
+        setErr(false)
+        setHata(false)
+        
+      }
       const url = "http://localhost:5000/api/projects/" + id;
       fetch(url, requestOptions)
-        .then((res) => res.json())
+        .then((res) => {
+          if(res.status===404){
+            setErr(true)
+          }
+        })
         .finally(userfilter)
-        .finally(setHata(false))
-        .catch((err) => console.log(err.data));
+        .finally(close())
+        .catch((data) => console.log(data.message));
     }
     else{
       console.log("hata")
@@ -87,6 +97,11 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
           </select>
 
         </form>
+        {
+          addUserErr&&(
+            <div id="invalid-user">Same user and project already extist!</div>
+          )
+        }
         {hata&&(
             <div id="invalid-user">Invalid user</div>
           )}

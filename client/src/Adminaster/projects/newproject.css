@@ -4,7 +4,7 @@
     height: 32vh;
     background-color: rgb(55, 48, 91);
     width: 12%;
-    margin-left: 9%;
+    margin-left: 23%;
     margin-bottom: 5%;
     border-radius: 10px;
     margin-top: 22%;
@@ -52,7 +52,7 @@ select:focus {
     height: auto;
     background-color: rgb(55, 48, 91);
     width: 11%;
-    margin-left: 9%;
+    margin-left: 25%;
     border-radius: 10px;
     margin-top: 22%;
     padding-top: 0.5%;

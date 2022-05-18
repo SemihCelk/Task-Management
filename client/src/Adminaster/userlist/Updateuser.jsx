@@ -5,7 +5,7 @@ import "./update.css";
 function Updateuser({ loadData, data, setShowEditComp }) {
   const [name, setName] = useState(data.name);
   const [surname, setSurname] = useState(data.surname);
-  const [password, setPassword] = useState(data.password);
+  const [password, setPassword] = useState();
   const [mail, setMail] = useState(data.mail);
   const [isAdmin, setIsAdmin] = useState(data.isAdmin);
   const [throwerror, setThrowError] = useState(false);
@@ -21,6 +21,8 @@ function Updateuser({ loadData, data, setShowEditComp }) {
     let lenght = password.length;
     if (
       name.startsWith(" ") ||
+      name.endsWith(" ") ||
+      surname.startsWith(" ") ||
       surname.endsWith(" ") ||
       password.startsWith(" ")
       || lenght < 7
@@ -71,7 +73,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <input
                 autoComplete="off"
                 type="text"
-                placeholder="Name"
+                placeholder="Username"
                 value={name}
                 name="name"
                 onChange={(e) => setName(e.target.value)}
@@ -79,13 +81,13 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               ></input>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>Name</label>
+              <label>Username</label>
             </div>
             <div className="group-update">
               <input
                 autoComplete="off"
                 type="text"
-                placeholder="Surname"
+                placeholder="Name"
                 value={surname}
                 name="surname"
                 onChange={(e) => setSurname(e.target.value)}
@@ -93,7 +95,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               ></input>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>Surname</label>
+              <label>Name</label>
             </div>
             <div className="group-update">
               <input
@@ -110,7 +112,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               <label>Password</label>
               {
                 passwordErr&&(
-                  <div id="red">You have to use Minimum 8 character</div>
+                  <div id="red">You have to use minimum 8 character</div>
                 )
               }
             </div>

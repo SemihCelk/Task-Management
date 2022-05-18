@@ -4,13 +4,15 @@
   height: 40vh;
   background-color: rgb(55, 48, 91);
   width: 12%;
-  margin-left: 9%;
+  margin-left: 25%;
   margin-bottom: 5%;
   border-radius: 10px;
   margin-top: 15%;
   padding-top: 12px;
 }
-
+#red{
+  color: red;
+}
 .x {
   float: right;
   cursor: pointer;
@@ -153,8 +155,6 @@ input:focus~.bar:after {
 
 .acceptbtn {
   margin-bottom: 10px;
-  margin-top: -13px;
-  width: 66px;
   padding: 8px 8px 8px 8px;
   text-align: center;
   float: right;

@@ -4,17 +4,18 @@
     height: 32vh;
     background-color: rgb(55, 48, 91);
     width: 12%;
-    margin-left: 9%;
+    margin-left: 23%;
     margin-bottom: 5%;
     border-radius: 10px;
     margin-top: 22%;
     padding-top: 13px
 }
 
-select:focus{
+select:focus {
     outline: none;
 }
-    .color{
+
+.color {
     background-color: #75688f;
     font-size: 20px;
     margin-left: 5%;
@@ -22,6 +23,7 @@ select:focus{
     color: rgb(255, 255, 255);
     border-radius: 2px;
 }
+
 .addprojectbehind {
     z-index: 1;
     width: 152%;
@@ -43,41 +45,50 @@ select:focus{
     margin-top: 10%;
     margin-right: 5%;
 }
-.updateproject{
+
+.updateproject {
     display: inline-table;
     position: absolute;
     height: auto;
     background-color: rgb(55, 48, 91);
     width: 11%;
-    margin-left: 9%;
+    margin-left: 25%;
     border-radius: 10px;
     margin-top: 22%;
     padding-top: 0.5%;
 }
-#spanupdate{
+
+#spanupdate {
     letter-spacing: 1px;
-    font-family:'Font Awesome 6 Free' ;
+    font-family: 'Font Awesome 6 Free';
 }
-.first-select{
+
+.first-select {
     width: 110px;
     margin-left: 13px;
     margin-bottom: 10px;
 }
-.edit-form{
+
+.edit-form {
     margin-left: 1%;
 }
-.edit-summary-area{
+
+.edit-summary-area {
+    padding-left: 2%;
+    padding-top: 2%;
     width: 99%;
     resize: none;
     height: 10vh;
     border-radius: 5px;
 }
-.edit-input{
-        display: block;
-        margin-bottom: 3%;
-        position: relative;
+
+.edit-input {
+    display: block;
+    margin-bottom: 3%;
+    position: relative;
 }
-.line-bottom{
+
+.line-bottom {
     width: 100%;
     background-color: white;
     font-weight: bold;
@@ -85,8 +96,16 @@ select:focus{
     margin-bottom: 3%;
     margin-top: 2%;
 }
-.add-project-group{
+
+.add-project-group {
     position: relative;
     margin-bottom: 7%;
     margin-top: 9%;
+}
+
+#err {
+    margin-top: -5%;
+    margin-bottom: 2%;
+    font-size: 16px;
+    color: red;
 }

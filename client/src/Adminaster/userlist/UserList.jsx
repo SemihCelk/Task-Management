@@ -41,7 +41,7 @@ function UserList() {
   };
   return (
     <div className="userlist-maindiv">
-      <h2>UserList Management</h2>
+      <h2>Userlist Management</h2>
       <button
         className="delBTN"
         onClick={() => {
@@ -103,28 +103,27 @@ function UserList() {
       <br></br>
       <div className="userlist-table-div">
         <table id="userlist-table">
-          <thead>
+          <thead >
             <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Surname</th>
+              <th id="userid-padding-left" >ID</th>
+              <th id="name-padding-left">Username</th>
+              <th id="surname-padding-left">Name</th>
               <th>Mail</th>
-              <th>password</th>
-              <th>Admin</th>
+              <th>isAdmin</th>
               <th>Edit</th>
               <th>Delete</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody >
             {userList.map((user, i) => {
               if (user.name !== "admin") {
                 return (
                   <tr key={i}>
-                    <td>{user.id}</td>
-                    <td>{user.name}</td>
-                    <td>{user.surname}</td>
-                    <td>{user.mail}</td>
-                    <td className="hidetext">{user.password}</td>
+                    <td id="userid-padding-left">{user.id}</td>
+                    <td id="name-padding-left">{user.name}</td>
+                    <td id="surname-padding-left">{user.surname}</td>
+                    <td id="mail-padding-left">{user.mail}</td>
+                    {/* <td className="hidetext">{user.password}</td> */}
                     <td>{String(user.isAdmin)}</td>
                     <td>
                       <i

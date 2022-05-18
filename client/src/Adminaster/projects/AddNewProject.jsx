@@ -4,25 +4,46 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
   const [projectid, setProjectid] = useState();
   const [projectName, setProjectname] = useState();
   const [userid, setUserid] = useState();
-  const [hata,setHata]=useState()
+  const [hata, setHata] = useState(false);
+  const [sameIdErr, setSameIdErr] = useState(false);
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(userid, projectid, projectName);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userid, projectid, projectName }),
-    };
+    if (
+      isNaN(projectid) ||
+      projectid === null ||
+      projectName === null ||
+      projectName.startsWith(" ") ||
+      projectName.endsWith(" ") ||
+      projectid.startsWith(" ") ||
+      projectid.endsWith(" ")
+    ) {
+      setHata(true);
+    } else {
+      setHata(false);
+      console.log(userid, projectid, projectName);
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userid, projectid, projectName }),
+      };
 
-    const url = "http://localhost:5000/api/projects";
-    fetch(url, requestOptions)
-      .then((res) => res.json())
-      .then(() => {
-        projectData();
-      })
-      .finally(setshowproject(false))
-      .catch((err) => setHata("proje eklenemedi"));
+      const url = "http://localhost:5000/api/projects";
+      fetch(url, requestOptions)
+        .then((res) => {
+          if (res.status === 404) {
+            setSameIdErr(true);
+
+          } else {
+            setshowproject(false)
+          }
+        })
+        .then(() => {
+          projectData();
+        })
+        .catch((err) => setHata(true));
+    }
   };
+
   return (
     <div className="addprojectbehind">
       <div className="container addproject">
@@ -36,33 +57,39 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
           ></i>
         </div>
         <hr className="line" />
-        <form style={{marginLeft:"10px"}}>
-        <div className="add-project-group">
-              <input
+        <form style={{ marginLeft: "10px" }}>
+          <div className="add-project-group">
+            <input
               autoComplete="off"
-                type="text"
-                placeholder="ID"
-                name="id"
-                onChange={(e) => setProjectid(e.target.value)}
-                required
-              ></input>
-              <span className="highlight"></span>
-              <span className="bar"></span>
-              <label>ID</label>
-            </div>
-            <div className="add-project-group">
-              <input
+              type="text"
+              placeholder="ID"
+              name="id"
+              onChange={(e) => setProjectid(e.target.value)}
+              required
+            ></input>
+            <span className="highlight"></span>
+            <span className="bar"></span>
+            <label>ID</label>
+            {
+              sameIdErr&&(
+                <div id="add-summary-err">Same ıd already extist!</div>
+              )
+            }
+          </div>
+          <div className="add-project-group">
+            <input
               autoComplete="off"
-                type="text"
-                placeholder="Project Name"
-                name="id"
-                onChange={(e) => setProjectname(e.target.value)}
-                required
-              ></input>
-              <span className="highlight"></span>
-              <span className="bar"></span>
-              <label>Project Name</label>
-            </div>
+              type="text"
+              placeholder="Project Name"
+              name="id"
+              onChange={(e) => setProjectname(e.target.value)}
+              required
+            ></input>
+            <span className="highlight"></span>
+            <span className="bar"></span>
+            <label>Project Name</label>
+          </div>
+          {hata && <div id="err">{"Invalid data"}</div>}
           <select
             className="select"
             onChange={(e) => {
@@ -71,12 +98,12 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
           >
             <option>Choose one</option>
             {userlist.map((item, i) => {
-             if(item.name !=="admin")
-              return (
-                <option key={i} value={item.id}>
-                  {item.id} {item.name}
-                </option>
-              );
+              if (item.name !== "admin")
+                return (
+                  <option key={i} value={item.id}>
+                    {item.id} {item.name}
+                  </option>
+                );
             })}
           </select>
         </form>

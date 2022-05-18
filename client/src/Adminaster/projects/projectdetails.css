@@ -1,32 +1,38 @@
-.details-box{
+.details-box {
     background-color: #11121f;
     width: 100%;
     height: auto;
     display: inline-table;
 }
-table{
+
+table {
     border-collapse: collapse;
-    text-align: center; 
+    text-align: center;
     width: 85%;
 }
-.project-details-x{
+
+.project-details-x {
     font-size: 20px;
 }
-.fa-xmark{
-cursor: pointer;
+
+.fa-xmark {
+    cursor: pointer;
 }
-#fill{
+
+#fill {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 75px;
 }
-table tr td{
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
+table tr td {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.summary-pop-up{
+
+.summary-pop-up {
     text-align: center;
-    margin-left: 47%;
+    margin-left: 56%;
     background-color: #21304d;
     width: 20%;
     height: auto;
@@ -34,4 +40,14 @@ table tr td{
     justify-content: center;
     margin-top: 34%;
     border-radius: 10px;
+}
+
+.delBTN .add-user-button {
+    transform: translateX(25px);
+    color: white;
+    font-weight: bold;
+
+}
+.delBTN:hover .add-user-button  {
+	color: transparent;
 }

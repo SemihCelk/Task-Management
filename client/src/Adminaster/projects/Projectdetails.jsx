@@ -21,6 +21,7 @@ function Projectdetails({
   const [summaryUserfilter, setUserfilter] = useState([]);
   const [data, setData] = useState([]);
   const [tarih, setTarih] = useState([]);
+  console.log(id)
   const loadData = () => {
     const requestOptions = {
       method: "GET",
@@ -106,7 +107,7 @@ function Projectdetails({
           setUseradd(true);
         }}
       >
-        <span className="text">Add User</span>
+        <span className="add-user-button">Add User</span>
         <span className="icon">+</span>
       </button>
       <button
@@ -174,14 +175,21 @@ function Projectdetails({
                 if (item.taskuser === null) {
                   item.taskuser = "null";
                 }
+                let x = "";
+                if(item.statusid ==="Inprogress"){
+                   x = "In Progress"
+                }else{
+                  x = item.statusid
+                } 
                 const data = item.taskuser.toString().toUpperCase();
-                return (
+                
+                return ( 
                   <tr key={i}>
                     <td>{item.id}</td>
                     <td>{data}</td>
                     <td id="fill">{item.summary}</td>
                     <td id="fill">{item.description}</td>
-                    <td className={item.statusid}>{item.statusid}</td>
+                    <td className={item.statusid}>{x}</td>
                     <td>{createdDate}</td>
                     <td>{finished}</td>
                     <td>

@@ -16,7 +16,6 @@ function Project() {
   const [id, setid] = useState();
   const [loading, setLoading] = useState(true);
   const [itemLoading, setitemLoading] = useState(true);
-
   const projectData = () => {
     const requestOptions = {
       method: "GET",

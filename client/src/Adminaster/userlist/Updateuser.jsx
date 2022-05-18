@@ -5,34 +5,54 @@ import "./update.css";
 function Updateuser({ loadData, data, setShowEditComp }) {
   const [name, setName] = useState(data.name);
   const [surname, setSurname] = useState(data.surname);
-  const [password, setPassword] = useState(data.password);
+  const [password, setPassword] = useState();
   const [mail, setMail] = useState(data.mail);
   const [isAdmin, setIsAdmin] = useState(data.isAdmin);
   const [throwerror, setThrowError] = useState(false);
-  const { handleSubmit, register } = useForm();
+  const [passwordErr, setPasswordErr] = useState(false);
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
   const onSubmit = (e) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    const requestOptions = {
-      method: "PUT",
-      headers: myHeaders,
-      body: JSON.stringify({
-        name,
-        surname,
-        password,
-        mail,
-        isAdmin,
-      }),
-      redirect: "follow",
-    };
-    const callbackFunction1 = (result) => console.log(result);
-    setShowEditComp(false);
-    fetch("http://localhost:5000/api/user/" + data.id, requestOptions)
-      .then((response) => response.json())
-      .then(callbackFunction1)
-      .finally(loadData) 
-      .catch((error) => console.log("error", error));
-    console.log(isAdmin);
+    let lenght = password.length;
+    if (
+      name.startsWith(" ") ||
+      name.endsWith(" ") ||
+      surname.startsWith(" ") ||
+      surname.endsWith(" ") ||
+      password.startsWith(" ")
+      || lenght < 7
+    ) {
+      setThrowError(true);
+      setPasswordErr(true)
+    } else {
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      const requestOptions = {
+        method: "PUT",
+        headers: myHeaders,
+        body: JSON.stringify({
+          name,
+          surname,
+          password,
+          mail,
+          isAdmin,
+        }), 
+        redirect: "follow",
+      };
+      const callbackFunction1 = (result) => console.log(result);
+      setShowEditComp(false);
+      fetch("http://localhost:5000/api/user/" + data.id, requestOptions)
+        .then((response) => response.json())
+        .then(callbackFunction1)
+        .finally(loadData)
+        .catch((error) => console.log("error", error));
+      console.log(isAdmin);
+    }
   };
   return (
     <div className="behind">
@@ -51,12 +71,26 @@ function Updateuser({ loadData, data, setShowEditComp }) {
           <div className="update-data">
             <div className="group-update">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
-                placeholder="Name"
+                placeholder="Username"
                 value={name}
                 name="name"
                 onChange={(e) => setName(e.target.value)}
+                required
+              ></input>
+              <span className="highlight"></span>
+              <span className="bar"></span>
+              <label>Username</label>
+            </div>
+            <div className="group-update">
+              <input
+                autoComplete="off"
+                type="text"
+                placeholder="Name"
+                value={surname}
+                name="surname"
+                onChange={(e) => setSurname(e.target.value)}
                 required
               ></input>
               <span className="highlight"></span>
@@ -65,23 +99,9 @@ function Updateuser({ loadData, data, setShowEditComp }) {
             </div>
             <div className="group-update">
               <input
-              autoComplete="off"
+                autoComplete="off"
                 type="text"
-                placeholder="Surname"
-                value={surname}
-                name="surname"
-                onChange={(e) => setSurname(e.target.value)}
-                required
-              ></input>
-              <span className="highlight"></span>
-              <span className="bar"></span>
-              <label>Surname</label>
-            </div>
-            <div className="group-update">
-              <input
-              autoComplete="off"
-                type="text"
-                placeholder="password"
+                placeholder="Password"
                 value={password}
                 name="date"
                 onChange={(e) => setPassword(e.target.value)}
@@ -89,36 +109,42 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               ></input>
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>password</label>
+              <label>Password</label>
+              {
+                passwordErr&&(
+                  <div id="red">You have to use minimum 8 character</div>
+                )
+              }
             </div>
             <div className="group-update">
               <input
-              autoComplete="off"
-                type="text"
-                placeholder="E-mail"
-                name="mail"
                 value={mail}
-                {...register("email", {
+                type="text"
+                placeholder="Email*"
+                {...register("Email", {
+                  required: "Email is required",
                   pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    value: /^\S+@\S+$/i,
+                    message: "invalid email address",
                   },
                 })}
+                autoComplete="off"
                 onChange={(e) => {
                   setMail(e.target.value);
                 }}
-                required
-              ></input>
+              />
+              {errors.Email && <div id="red">{errors.Email.message}</div>}
+              {throwerror && <div id="red">Invalid character</div>}
               <span className="highlight"></span>
               <span className="bar"></span>
-              <label>E-mail</label>
+              <label>Email*</label>
             </div>
             <div style={{ marginTop: "-5%" }}>
-              <span>Admin:</span>
+              <span>IsAdmin:</span>
               <select
                 name="ask"
                 id="ask"
-                value={isAdmin} 
+                value={isAdmin}
                 onChange={(e) => {
                   setIsAdmin(e.target.value);
                 }}

@@ -11,13 +11,19 @@
     width: 13%;
     height: auto;
     position: absolute;
-    margin-top: 20%;
+    margin-top: 18%;
     border-radius: 10px;
     padding-top: 15px;
     padding-right: 10px;
-    margin-left: 5%;
+    margin-left: 23%;
     min-width: 200px;
 }
 .select-project-user-add{
     margin-top: 3%;
+}
+#invalid-user{
+    color: red;
+    margin-top: -3%;
+    margin-bottom: 3%;
+
 }

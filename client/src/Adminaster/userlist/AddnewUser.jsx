@@ -130,7 +130,6 @@ function AddnewUser({ loadData, setShowAddComp }) {
                 onChange={(e) => setMail(e.target.value)}
               />
               {errors.Email && <div id="red">{errors.Email.message}</div>}
-              {throwError && <div id="red">Invalid character</div>}
               <span className="highlight"></span>
               <span className="bar"></span>
               <label>Email*</label>
@@ -149,6 +148,7 @@ function AddnewUser({ loadData, setShowAddComp }) {
                 <option value="true">true</option>
               </select>
             </div>
+            {throwError && <div id="red">Invalid character</div>}
           <div style={{ color: "red" }}>{addErr}</div>
             <br></br>
             <button className="acceptbtn">Add</button>

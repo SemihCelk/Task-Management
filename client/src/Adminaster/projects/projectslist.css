@@ -1,6 +1,6 @@
 .project{
     width: 100%;
-    margin-top: 3%;
+    margin-top: .5%;
 }
 .project-main-div{
 overflow: auto;
@@ -12,7 +12,13 @@ margin-top: 1%;
 .project-table-div{
     margin-top: 4%;
     width: 100%;
+    padding-bottom: 15%;
+    height: 65vh;
+    overflow: auto;
  
+}
+.project-table-div::-webkit-scrollbar {
+    display: none;
 }
 #projectlist-table{
     width: 100%;

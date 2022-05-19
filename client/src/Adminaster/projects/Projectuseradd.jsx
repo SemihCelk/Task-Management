@@ -108,6 +108,7 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
         <div>
           Added Users
           <hr className="line add-user-hr"></hr>
+          <div className="project-user-add-div">
           <table className="project-user-add-table">
             <thead>
               <tr>
@@ -140,6 +141,7 @@ function Projectuseradd({ setUseradd, userlist, id,summary}) {
               );
             })}
           </table>
+        </div>
         </div>
         <button className="acceptbtn btn-add-user" onClick={adduser}>
           Add

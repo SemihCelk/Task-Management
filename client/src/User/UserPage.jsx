@@ -51,10 +51,10 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
     <div className="userpage">
       <div className="top-bar">
         <div id="navbar-text"> Welcome {name}</div>
-        <div className="logout-btn">
+        <div className="log-out-user">
           <div className="logout-btn-user">
             <i
-              className="fa-solid fa-arrow-right-from-bracket logout"
+              className="fa-solid fa-arrow-right-from-bracket logout-user"
               title="Log Out"
               onClick={() => {
                 setToken(localStorage.setItem("token", ""));

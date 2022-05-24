@@ -14,56 +14,92 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/login", async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password } = req.body; 
   try {
-    const rows = `SELECT id,name,password,"isAdmin" FROM userslist WHERE name=$1`;
-    const get = await client.query(rows, [username]);
-
-    if (username == "admin" && password == "admin") {
-      const perm = get.rows[0].isAdmin;
-      const idHolder = get.rows[0].id;
-      const accessToken = jwt.sign({ idHolder, perm }, "secretkey");
-      res.json({
-        accessToken,
-        username: username,
-        isAdmin: perm,
-        success: true,
-      });
-    } else {
-      console.log(get.rows)
-      if (get.rows.length > 0) { 
-        const hashpassword = get.rows[0].password;
-        const passDecoder = await bcrypt.compare(password, hashpassword);
-        if(passDecoder){
-          const perm = get.rows[0].isAdmin;
-          const idHolder = get.rows[0].id;
-          const accessToken = jwt.sign({ idHolder, perm }, "secretkey");
-          res.json({
-            accessToken,
-            username: username,
-            isAdmin: perm,
-            userid: idHolder,
-            success: true,
-          });
-        }
-        else{
-          res.status(404).json({
-            success: false,
-            error: "Incorrect entry",
-          });
-        }
-      } else {
+    const list = `select * from userslist order by id`;
+    const process = await client.query(list);
+    const data = process.rows;
+    const user = data.find((u) => {
+      return u.name === username && password === u.password;
+    });
+      if (!user) {
         res.status(404).json({
           success: false,
           error: "Incorrect entry",
         });
+      } else {
+        const accessToken = jwt.sign(
+          { id: user.id, isAdmin: user.isAdmin },
+          "secretkey"
+        );
+        res.status(200).json({
+          username: user.name,
+          isAdmin: user.isAdmin,
+          accessToken,
+          userid: user.id,
+          success: true,
+
+        });
       }
     }
-  } catch (error) {
-    console.log(error);
+  catch (error) {
     next(error);
   }
 });
+
+// try {
+//   const rows = `SELECT id,name,password,"isAdmin" FROM userslist WHERE name=$1`;
+//   const get = await client.query(rows, [username]);
+
+//   if (username == "admin" && password == "admin") {
+//     const perm = get.rows[0].isAdmin;
+//     const idHolder = get.rows[0].id;
+//     const accessToken = jwt.sign({username}, "secretkey");
+//     res.json({
+//       accessToken,
+//       username: username,
+//       isAdmin: perm,
+//       success: true,
+//     });
+//   } else {
+//     if (get.rows.length > 0) {
+//       let a = []
+//       get.rows.map((item,i)=>{
+//         a[i]=item
+//       } )
+//       console.log(a[0].isAdmin)
+//       const b = a[0].password
+//       const hashpassword =b;
+//       const passDecoder = await bcrypt.compare(password, hashpassword);
+//       if (passDecoder) {
+//         const perm = get.rows[0].isAdmin
+//         console.log(perm)
+//         const idHolder = parseInt(a[0].id);
+//         const accessToken = jwt.sign({ idHolder,perm }, "secretkey");
+//         res.json({
+//           accessToken,
+//           username: username,
+//           isAdmin: perm,
+//           userid: idHolder,
+//           success: true,
+//         });
+//       } else {
+//         res.status(404).json({
+//           success: false,
+//           error: "Incorrect entry",
+//         });
+//       }
+//     } else {
+//       res.status(404).json({
+//         success: false,
+//         error: "Incorrect entry",
+//       });
+//     }
+//   }
+// } catch (error) {
+//   console.log(error);
+//   next(error);
+// }
 
 app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
@@ -122,6 +158,17 @@ app.post("/api/projects", async (req, res, next) => {
     res.json([created.rows]);
   } catch (error) {
     console.log("hata");
+    next(error);
+  }
+});
+//status changer
+app.put("/api/summary/user/:id/", async (req, res, next) => {
+  const status = req.body.statusData;
+  try {
+    const update = "UPDATE task SET statusid=$1 WHERE id=$2";
+    const updater = await client.query(update, [status, req.params.id]);
+    res.json(updater.rows);
+  } catch (error) {
     next(error);
   }
 });
@@ -198,6 +245,18 @@ app.post("/api/projects/:id/", async (req, res, next) => {
     next(error);
   }
 });
+//userTABle
+app.get("/api/project/userpage/user", async (req, res, next) => {
+  try {
+    const list = "SELECT userid,projectid from projectuser";
+    const getir = await client.query(list);
+    console.log(getir.rows);
+    res.json(getir.rows);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // Project-user-delete
 app.delete("/api/projects/user/:id/", async (req, res, next) => {
   try {
@@ -225,11 +284,21 @@ app.delete("/api/projects/:id/", async (req, res, next) => {
   }
 });
 //project user filter
-app.get("/api/project/user", async (req, res, next) => {
+app.get("/api/project/user/:id/", async (req, res, next) => {
+  const projectid = req.params.id;
+  console.log(projectid);
   try {
-    const list = "SELECT * FROM public.projectuser ORDER BY id";
-    const getir = await client.query(list);
-    res.json(getir.rows);
+    const list = "SELECT userid,projectid from projectuser WHERE projectid=$1";
+    const getir = await client.query(list, [projectid]);
+    const data = getir.rows;
+    const filtrele = "SELECT id,name from userslist WHERE id=$1";
+    let userInfo = [];
+    for (let i = 0; i < data.length; i++) {
+      const dataset = await client.query(filtrele, [data[i].userid]);
+      userInfo[i] = dataset.rows;
+    }
+    res.json(userInfo);
+    console.log(userInfo);
   } catch (error) {
     next(error);
   }
@@ -241,7 +310,7 @@ app.put("/api/projects/:id/", async (req, res, next) => {
     const project_user = req.body.userid;
     console.log(projectName);
     const update = `
-      update project
+      update project 
       set	project_name=$1  
         WHERE id=$2
       RETURNING *
@@ -265,13 +334,14 @@ app.post("/api/user", async (req, res, next) => {
   const isAdmin = req.body.isAdmin;
   console.log(name, surname, password, mail);
   try {
-    const checkuser = 'SELECT name,surname,mail,password,"isAdmin" from userslist where name=$1 AND surname=$2 AND mail=$3'
-    const process = await client.query(checkuser,[name,surname,mail]);
+    const checkuser =
+      'SELECT name,surname,mail,password,"isAdmin" from userslist where name=$1 AND surname=$2 AND mail=$3';
+    const process = await client.query(checkuser, [name, surname, mail]);
     let total = process.rows;
-    if(total.length > 0){
+    if (total.length > 0) {
       return res.status(404).json({
         success: false,
-        message: "Same user and project already extist!"
+        message: "Same user and project already extist!",
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -280,7 +350,7 @@ app.post("/api/user", async (req, res, next) => {
     const response = await client.query(sql, [
       name,
       surname,
-      hashedPassword,
+      password,
       mail,
       isAdmin,
     ]);
@@ -350,7 +420,7 @@ app.put("/api/user/:id/", async (req, res, next) => {
       name,
       surname,
       mail,
-      hashedPassword,
+      password,
       isAdmin,
       req.params.id,
     ]);

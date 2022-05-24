@@ -10,10 +10,12 @@ table {
     text-align: center;
     width: 85%;
 }
+#icon{
+    margin-right: 10%;
+}
 
 .project-details-x {
     font-size: 20px;
-    margin-top: -2.5%;
 }
 
 .fa-xmark {

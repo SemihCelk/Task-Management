@@ -64,7 +64,7 @@ function UserList() {
             ></i>
             <br></br>
             <div id="pop-up-text">
-              Are you sure you want to delete this user?
+              Are you sure you want to delete {data.name}?
             </div>
             <div className="sub-pop">
               <button
@@ -111,7 +111,6 @@ function UserList() {
               <th>Mail</th>
               <th>isAdmin</th>
               <th>Edit</th>
-              <th>Delete</th>
             </tr>
           </thead>
           <tbody >
@@ -119,15 +118,15 @@ function UserList() {
               if (user.name !== "admin") {
                 return (
                   <tr key={i}>
-                    <td id="userid-padding-left">{user.id}</td>
-                    <td id="name-padding-left">{user.name}</td>
-                    <td id="surname-padding-left">{user.surname}</td>
-                    <td id="mail-padding-left">{user.mail}</td>
-                    {/* <td className="hidetext">{user.password}</td> */}
+                    <td id="userid-padding-left" >{user.id}</td>
+                    <td id="name-padding-left " className="fill">{user.name}</td>
+                    <td id="surname-padding-left" className="fill">{user.surname}</td>
+                    <td id="mail-padding-left" className="fill">{user.mail}</td> 
                     <td>{String(user.isAdmin)}</td>
                     <td>
                       <i
                         className="fa-solid fa-pen-to-square edit"
+                        id="icon"
                         onClick={() => {
                           setIdHolder(user.id);
                           setData(user);
@@ -135,12 +134,11 @@ function UserList() {
                           console.log(idHolder, "id");
                         }}
                       ></i>
-                    </td>
-                    <td>
-                      <i
+                       <i
                         className="fa-solid fa-trash dustbin"
                         onClick={() => {
                           setIdHolder(user.id);
+                          setData(user);
                           setDeleted(true);
                         }}
                       ></i>

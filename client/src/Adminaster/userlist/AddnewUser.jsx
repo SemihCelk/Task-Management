@@ -25,8 +25,11 @@ function AddnewUser({ loadData, setShowAddComp }) {
     let lenght = password.length;
     if (
       name.startsWith(" ") || 
+      name.endsWith(" ")||
+      surname.startsWith(" ")||
       surname.endsWith(" ") ||
-      password.startsWith(" ") 
+      password.startsWith(" ")||
+      password.endsWith(" ")
       || lenght < 7
     ) {
       console.log(lenght,"lenght")

@@ -24,10 +24,11 @@ function Updateuser({ loadData, data, setShowEditComp }) {
       name.endsWith(" ") ||
       surname.startsWith(" ") ||
       surname.endsWith(" ") ||
-      password.startsWith(" ")
+      password.startsWith(" ")||
+      password.endsWith(" ")
       || lenght < 7
     ) {
-      setThrowError(true);
+      setThrowError(true); 
       setPasswordErr(true)
     } else {
       const myHeaders = new Headers();
@@ -51,7 +52,6 @@ function Updateuser({ loadData, data, setShowEditComp }) {
         .then(callbackFunction1)
         .finally(loadData)
         .catch((error) => console.log("error", error));
-      console.log(isAdmin);
     }
   };
   return (
@@ -64,7 +64,7 @@ function Updateuser({ loadData, data, setShowEditComp }) {
               setShowEditComp(false);
             }}
           ></i>
-          <span id="spanupdate">Update Data</span>
+          <span id="spanupdate">Update User</span>
         </div>
         <hr className="update-line"></hr>
         <form className="form" onSubmit={handleSubmit(onSubmit)}>

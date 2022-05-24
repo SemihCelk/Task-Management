@@ -80,7 +80,7 @@ function Project() {
             ></i>
             <br></br>
             <div id="pop-up-text">
-              Are you sure you want to delete this user?
+              Are you sure you want to delete this project?
             </div>
             <div className="sub-pop">
               <button
@@ -119,6 +119,7 @@ function Project() {
           projects={projects}
           userlist={userlist}
           id={id}
+          summary={summary}
           projectname={projectname}
           setshowprojectedit={setshowprojectedit}
         />

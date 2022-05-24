@@ -146,10 +146,9 @@ function Editsummary({
             >
               <option>Choose One</option>
               {summaryUserfilter.map((item, i) => {
-                if (item.projectid === id) {
-                  if (item.userid !== null)
-                    return <option key={i}>{item.userid}</option>;
-                }
+                  if (item[0].name !== null)
+                    return <option key={i} value={item[0].id}>{item[0].name}</option>;
+                
               })}
             </select>
           </div>

@@ -15,7 +15,8 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
       projectName.startsWith(" ") ||
       projectName.endsWith(" ") ||
       projectid.startsWith(" ") ||
-      projectid.endsWith(" ")
+      projectid.endsWith(" ") ||
+      userid === undefined
     ) {
       setHata(true);
     } else {

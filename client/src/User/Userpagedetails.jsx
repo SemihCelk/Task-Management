@@ -7,6 +7,7 @@ function Userpagedetails({
   details,
   setFolderpop,
   setShow,
+  summary
 }) {
   const [data, setData] = useState();
   const [pop, setPop] = useState(false);
@@ -15,7 +16,7 @@ function Userpagedetails({
   if (userid.userid)
     return (
       <div className="summary-user-table">
-        <i
+        <i 
           className="fa-solid fa-xmark user-pop-up-x"
           onClick={() => {
             setFolderpop(false);
@@ -24,7 +25,7 @@ function Userpagedetails({
         ></i>
 
         <h2 id="h2">Summarylist</h2>
-        {pop && <UserPopup data={data} setPop={setPop} />}
+        {pop && <UserPopup data={data} setPop={setPop} summary={summary} />}
         <div className="project-table">
           <table style={{ color: "white" }}>
             <thead>
@@ -37,9 +38,9 @@ function Userpagedetails({
             </thead>
             <tbody>
               {details.map((item, i) => {
+                console.log(details)
                 console.log(projectid.id, item.projectid);
                 if (
-                  userid.userid === item.taskuser &&
                   projectid.id === item.projectid
                 ) {
                   var x = "";

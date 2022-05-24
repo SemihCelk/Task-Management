@@ -13,12 +13,12 @@ function Projectlist({
   projects,
   setProjectlist,
   loading
-  
+   
 }) {
   return (
     <div>
       <h2>Projects List</h2>
-      <div className="">
+      <div >
         <button
           className="project-list-btn"
           onClick={() => {
@@ -41,7 +41,6 @@ function Projectlist({
                 <th>PROJECT NAME</th>
                 <th>DETAILS</th>
                 <th>EDIT</th>
-                <th>DELETE</th>
               </tr>
             </thead>
             <tbody>
@@ -64,7 +63,7 @@ function Projectlist({
                       ></i>
                     </td>
                     <td>
-                      <i
+                      <i id="icon"
                         className="fa-solid fa-pen-to-square edit"
                         onClick={() => {
                           setid(project.id);
@@ -73,9 +72,7 @@ function Projectlist({
                           loadData()
                         }}
                       ></i>
-                    </td>
-                    <td>
-                      <i
+                              <i
                         className="fa-solid fa-trash dustbin"
                         onClick={() => {
                           setDeleted(true);

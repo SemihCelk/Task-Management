@@ -17,9 +17,9 @@ const [name,setName]=useState(localStorage.getItem("name"));
   return (
     <div>
       {isAdmin === true ? (
-        <Admin setToken={setToken} setIsAdmin={setIsAdmin} name={name} setName={setName}/>
+        <Admin setToken={setToken} setIsAdmin={setIsAdmin} name={name} setName={setName} setSpecialid={setSpecialid}/>
       ) : (
-        <UserPage setToken={setToken} setIsAdmin={setIsAdmin} name={name} setName={setName} userSpecialid={userSpecialid}/>
+        <UserPage setToken={setToken} setIsAdmin={setIsAdmin} name={name} setName={setName} userSpecialid={userSpecialid} setSpecialid={setSpecialid}/>
       )}
     </div>
   );

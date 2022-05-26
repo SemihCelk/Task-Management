@@ -13,7 +13,7 @@ export default function SummaryAdd({
   const [start, setStart] = useState();
   const [finish, setFinish] = useState();
   const [hataSummary, setHatasummary] = useState(false);
-  const[descriptionerr,setDescriptionerr]=useState(false)
+  const [descriptionerr, setDescriptionerr] = useState(false);
   const { handleSubmit, register } = useForm("");
   const onSubmit = () => {
     const isValidDate = Date.parse(start);
@@ -22,18 +22,15 @@ export default function SummaryAdd({
       summary === Number ||
       description === Number ||
       isNaN(isValidDate) ||
-      isNaN(isValidDatef)
-      || description ===""
-    )
-     { 
+      isNaN(isValidDatef) ||
+      description === ""
+    ) {
       setHatasummary(true);
-    }
-    else if(description ==="")
-    {
-      setDescriptionerr(true)
-    }
-    else {
+    } else if (description === "") {
+      setDescriptionerr(true);
+    } else {
       console.log(id, summary, description, userid, start, finish);
+      console.log(userid);
       const status = "Open";
       const requestOptions = {
         method: "POST",
@@ -48,7 +45,6 @@ export default function SummaryAdd({
           status,
         }),
       };
-      console.log(userid, "ssss");
       fetch("http://localhost:5000/api/project/summary", requestOptions)
         .then((res) => res.json())
         .then(setShowsummaryadd(false))
@@ -56,7 +52,6 @@ export default function SummaryAdd({
         .catch((err) => console.log(err.data));
     }
   };
-
   return (
     <div className="addprojectbehind">
       <div className="container addsummary">
@@ -91,9 +86,7 @@ export default function SummaryAdd({
               cols="39"
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
-            {
-              descriptionerr&&<div>Please fill the gaps.</div>
-            }
+            {descriptionerr && <div>Please fill the gaps.</div>}
           </div>
           <div className="add-summary-group">
             <input
@@ -124,24 +117,21 @@ export default function SummaryAdd({
           </div>
           <div className="sub-choose">
             <span className="sub-choose-span">Select User:</span>
+
             <select
               className="select"
               onChange={(e) => {
                 setUserid(e.target.value);
-                console.log(e.target.value);
               }}
               value={userid}
             >
-              <option value={7}>Choose One</option>
+              <option value={7}>Choose One</option>;
               {summaryUserfilter.map((item, i) => {
-                if (item.projectid === id) {
-                  if (item.userid !== null)
-                    return (
-                      <option key={i} value={item.userid}>
-                        {item.userid}
-                      </option>
-                    );
-                }
+                return (
+                  item.map((data,key)=>{
+                    return <option key={key} value={data.id}>{data.name}</option>
+                  })
+                )
               })}
             </select>
           </div>

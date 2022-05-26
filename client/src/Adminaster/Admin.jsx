@@ -3,7 +3,7 @@ import "./admin.css";
 import "./navbar.css";
 import UserList from "./userlist/UserList";
 import Project from "./projects/Project";
-function Admin({ setToken, setIsAdmin, name, setName }) {
+function Admin({ setToken, setIsAdmin, name, setName,setSpecialid }) {
   const [userListShow, setuserList] = useState(true);
   const [project, setProject] = useState();
   return (
@@ -17,6 +17,7 @@ function Admin({ setToken, setIsAdmin, name, setName }) {
               setToken(localStorage.setItem("token", ""));
               setIsAdmin(localStorage.setItem("isAdmin", ""));
               setName(localStorage.setItem("name", ""));
+              setSpecialid(localStorage.setItem("id",""))
             }}
           ></i>
         </div>
@@ -59,37 +60,6 @@ function Admin({ setToken, setIsAdmin, name, setName }) {
         </div>
         </div>
       </div>
-     
-
-        {/* <div className="sidebar">
-        <div className="sidebaritems">
-          <div
-            className="sidebar-userlist"
-            onClick={() => {
-              setuserList(true);
-              setProject(false);
-            }}
-          >
-            <i className="fa-solid fa-users ">
-              {" "}
-              <div className="sidebar-text">UserList Management</div>
-            </i>
-          </div>
-          <br></br>
-          <div
-            className="sidebar-userlist"
-            onClick={() => {
-              setProject(true);
-              setuserList(false);
-            }}
-          >
-            <i className="fa-solid fa-file-code">
-              <div className="sidebar-text">Project Management</div>
-            </i>
-          </div>
-        </div>
-      </div>  */}
-      {/* </div> */}
       <div className="content">
         {userListShow && <UserList />}
         {project && <Project />}

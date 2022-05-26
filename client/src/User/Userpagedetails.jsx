@@ -7,15 +7,16 @@ function Userpagedetails({
   details,
   setFolderpop,
   setShow,
+  summary
 }) {
   const [data, setData] = useState();
   const [pop, setPop] = useState(false);
   console.log(projectid);
-  console.log(details);
+  console.log(userid.userid);
   if (userid.userid)
     return (
       <div className="summary-user-table">
-        <i
+        <i 
           className="fa-solid fa-xmark user-pop-up-x"
           onClick={() => {
             setFolderpop(false);
@@ -24,7 +25,7 @@ function Userpagedetails({
         ></i>
 
         <h2 id="h2">Summarylist</h2>
-        {pop && <UserPopup data={data} setPop={setPop} />}
+        {pop && <UserPopup data={data} setPop={setPop} summary={summary} />}
         <div className="project-table">
           <table style={{ color: "white" }}>
             <thead>
@@ -37,33 +38,35 @@ function Userpagedetails({
             </thead>
             <tbody>
               {details.map((item, i) => {
+                console.log(details)
+                console.log(projectid.id, item.projectid);
                 if (
-                  userid.userid === item.taskuser &&
                   projectid.id === item.projectid
-                ) 
-                var x = "";
-                if(item.statusid ==="Inprogress"){
-                   x = "In Progress"
-                }else{
-                  x = item.statusid
-                } 
-                { 
-                  return (
-                    <tr key={i}>
-                      <td id="fill">{item.summary}</td>
-                      <td id="fill">{item.description}</td>
-                      <td className={item.statusid}>{x}</td>
-                      <td>
-                        <i
-                          className="fa-solid fa-folder-open open-folder"
-                          onClick={() => {
-                            setData(item);
-                            setPop(true);
-                          }}
-                        ></i>
-                      </td>
-                    </tr>
-                  );
+                ) {
+                  var x = "";
+                  if (item.statusid === "Inprogress") {
+                    x = "In Progress";
+                  } else {
+                    x = item.statusid;
+                  }
+                  {
+                    return (
+                      <tr key={i}>
+                        <td id="fill">{item.summary}</td>
+                        <td id="fill">{item.description}</td>
+                        <td className={item.statusid}>{x}</td>
+                        <td>
+                          <i
+                            className="fa-solid fa-folder-open open-folder"
+                            onClick={() => {
+                              setData(item);
+                              setPop(true);
+                            }}
+                          ></i>
+                        </td>
+                      </tr>
+                    );
+                  }
                 }
               })}
             </tbody>

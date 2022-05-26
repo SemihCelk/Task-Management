@@ -27,3 +27,10 @@
     margin-bottom: 3%;
 
 }
+.project-user-add-div{
+    height: 30vh;
+    overflow: auto;
+}
+.project-user-add-div::-webkit-scrollbar {
+    display: none;
+}

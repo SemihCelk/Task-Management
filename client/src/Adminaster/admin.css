@@ -22,6 +22,7 @@ body{
     width: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     z-index: 1;
+    justify-content: right;
 }
 
 #navbartext {
@@ -46,6 +47,7 @@ body{
     font-size: 25px;
     transition: 0.2s;
 }
+
 .sidebar {
     min-width: 15%;
     width: auto;
@@ -86,8 +88,21 @@ body{
 }
 .logout-btn {
     margin-right: 1%;
+    float: right;
+}
+.log-out-user{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    float: right;
+    margin-right: 1%;
+
     display: flex;
-    margin-top: -.4%;
-    margin-left: 98.5%;
+    align-self: center;
+}
+.logout-user{
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
     float: right;
 }

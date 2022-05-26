@@ -4,6 +4,13 @@
 h3{
     padding: 2%;
 }
+.fill {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 75px;
+}
+ 
 .userlist-table-div {
     width: auto;
     margin-left: auto;
@@ -157,4 +164,7 @@ padding-left: 3%;
 }
 #mail-padding-left{
     width: 20%;
+}
+#icon{
+    margin-right: 10%;
 }

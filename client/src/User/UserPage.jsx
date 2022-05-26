@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import "./user.css";
 import Userpagedetails from "./Userpagedetails";
-function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
+function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid ,setSpecialid}) {
   const [projects, setProjects] = useState([]);
   const [listen, setListen] = useState(true);
   const [details, setDetails] = useState([]);
-  const [subdetail, setSubdetails] = useState([]);
   const [summaryUserfilter, setUserfilter] = useState([]);
   const [folderPop, setFolderpop] = useState(false);
   const [userid, setUserid] = useState();
   const [projectid, setProjectid] = useState();
   const [show, setShow] = useState(true);
+
   const data = () => {
     const requestOptions = {
       method: "GET",
@@ -30,17 +30,19 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
       .then((result) => setDetails(result))
       .catch((error) => console.log("error", error));
   };
+  
   const userfilter = () => {
     const requestOptions = {
       method: "GET",
       redirect: "follow",
     };
-
-    fetch("http://localhost:5000/api/project/user", requestOptions)
+      const url = "http://localhost:5000/api/project/userpage/user";
+    fetch(url, requestOptions)
       .then((response) => response.json())
       .then((result) => setUserfilter(result))
       .catch((error) => console.log("error", error));
   };
+
   if (listen) {
     summary();
     data();
@@ -51,15 +53,17 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
     <div className="userpage">
       <div className="top-bar">
         <div id="navbar-text"> Welcome {name}</div>
-        <div className="logout-btn">
+        <div className="log-out-user">
           <div className="logout-btn-user">
             <i
-              className="fa-solid fa-arrow-right-from-bracket logout"
+              className="fa-solid fa-arrow-right-from-bracket logout-user"
               title="Log Out"
               onClick={() => {
                 setToken(localStorage.setItem("token", ""));
                 setIsAdmin(localStorage.setItem("isAdmin", ""));
                 setName(localStorage.setItem("name", ""));
+                setSpecialid(localStorage.setItem("id",""))
+
               }}
             ></i>
           </div>
@@ -67,9 +71,9 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
       </div>
       {folderPop && (
         <Userpagedetails
+        summary={summary}
           projectid={projectid}
           userid={userid}
-          subdetail={subdetail}
           details={details}
           setFolderpop={setFolderpop}
           setShow={setShow}
@@ -92,7 +96,8 @@ function UserPage({ setToken, setIsAdmin, name, setName, userSpecialid }) {
                 return (
                   <tbody key={key}>
                     {projects.map((proje, i) => {
-                      if (item.userid === data && item.projectid === proje.id) {
+                      console.log(item.userid,userSpecialid)
+                      if (item.projectid ===proje.id && item.userid === data) {
                         return (
                           <tr key={i}>
                             <td>{proje.id}</td>

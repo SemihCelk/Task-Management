@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const connect = require("../connection")
+const connect = require("../dbconnection")
 
 //LİSTELEME
 router.get("/api/user", async (req, res, next) => {

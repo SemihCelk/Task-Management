@@ -1,9 +1,10 @@
 const pg = require("pg");
 const express = require("express");
+require('dotenv').config()
+const dbConnect =process.env.DB_KEY
 
 const client = new pg.Client({
-    connectionString:
-      "postgres://gzinafdz:l6E9pDuoWrWJ127aAZI6pOEmGRD9b1Oc@surus.db.elephantsql.com/gzinafdz",
+    connectionString:dbConnect,
   }); 
   
 module.exports = client

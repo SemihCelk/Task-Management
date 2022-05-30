@@ -62,6 +62,7 @@
   }
   
   .login-box form p {
+    border: 1px solid;
     float: right;
     position: relative;
     padding: 10px 20px;
@@ -78,6 +79,7 @@
   .login-box p:hover {
     background: #0fc7d19d;
     border-radius: 5px;
+    color: white;
     cursor: pointer;
   }
   .login-box p span {

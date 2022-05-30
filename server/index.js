@@ -1,26 +1,19 @@
 const express = require("express");
-const app = express();
 const cors = require("cors");
-
+const app = require("./app");
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
-app.use((req, res, next) => {
-  res.set("Access-Control-Allow-Origin", "*");
-  next();
-});
-//Connection port
-app.listen(5000, () => {
-  console.log("working on port 5000");
-});
-const loginRoute = require("./router/login")
-app.use("/",loginRoute);
-const userRoute = require("./router/user")
-app.use("/",userRoute);
-const projectRoute = require("./router/project")
-app.use("/",projectRoute)
-const summaryRoute = require("./router/summary")
-app.use("/",summaryRoute)
+// midlewares
+const loginRoute = require("./api/login");
+const userRoute = require("./api/user");
+const projectRoute = require("./api/project");
+const summaryRoute = require("./api/summary");
+
+app.use("/", loginRoute);
+app.use("/", userRoute);
+app.use("/", projectRoute);
+app.use("/", summaryRoute);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

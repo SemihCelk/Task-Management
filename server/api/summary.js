@@ -1,6 +1,6 @@
 const express = require("express")
 const router = express.Router()
-const connect = require("../connection")
+const connect = require("../dbconnection")
 
 
 // //Project summary edit

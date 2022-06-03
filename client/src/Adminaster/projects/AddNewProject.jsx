@@ -91,6 +91,7 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
             <label>Project Name</label>
           </div>
           {hata && <div id="err">{"Invalid data"}</div>}
+          <span>User: </span>
           <select
             className="select"
             onChange={(e) => {
@@ -102,7 +103,7 @@ function AddNewProject({ setshowproject, userlist, projectData }) {
               if (item.name !== "admin")
                 return (
                   <option key={i} value={item.id}>
-                    {item.id} {item.name}
+                   {item.name}
                   </option>
                 );
             })}

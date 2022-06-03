@@ -1,20 +1,16 @@
 const express = require("express");
 const app = express();
-const router = express.Router();
+const client = require("../dbconnection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-require('dotenv').config()
+const authentication = require("../services/auth.service")
+const myauth = new authentication()
 
-
-const connect = require("../dbconnection");
-connect.connect();
-
-router.post("/login", async (req, res, next) => {
+const auth = async (req, res, next) => {
   const { username, password } = req.body;
-  const key = process.env.SECRET_KEY
+  const key = process.env.SECRET_KEY;
   try {
-    const list = `select * from userslist order by id`;
-    const process = await connect.query(list);
+    const process = await myauth.auth();
     const data = process.rows;
     const user = data.find((u) => {
       return u.name === username;
@@ -48,7 +44,8 @@ router.post("/login", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-});
+};
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   const message = err.message || "Unknown Error";
@@ -57,4 +54,4 @@ app.use((err, req, res, next) => {
     stack: err.stack,
   });
 });
-module.exports = router;
+module.exports = auth;

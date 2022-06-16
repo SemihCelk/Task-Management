@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = require("./app");
+
 app.use(cors());
 app.use(express.json());
-require('dotenv').config()
 
 
 
@@ -17,3 +17,12 @@ app.use("/", loginRoute);
 app.use("/", userRoute);
 app.use("/", projectRoute);
 app.use("/", summaryRoute);
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    const message = err.message || "Unknown Error";
+    res.status(500).json({
+      message,
+      stack: err.stack,
+    });
+  });

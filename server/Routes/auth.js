@@ -46,12 +46,5 @@ const auth = async (req, res, next) => {
   }
 };
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  const message = err.message || "Unknown Error";
-  res.status(500).json({
-    message,
-    stack: err.stack,
-  });
-});
+
 module.exports = auth;
